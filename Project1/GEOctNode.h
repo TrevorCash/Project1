@@ -13,8 +13,11 @@ public:
 	GEOctNode(const GEOctNode* parent);
 	~GEOctNode();
 
-	GEOctNode* AddEntity(GEEntity* ent);
+	void AddEntity(GEEntity* ent);
 	void RemoveEntity(GEEntity* ent);
+
+	GEOctNode* GrowUpTowardsPoint(glm::vec3 point);
+	void GrowDown();
 
 
 private:

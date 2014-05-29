@@ -93,11 +93,11 @@ void GEWorld::Initialize()
 	GEEntityRigidBody* prevBody = nullptr;
 	for (int j = 0; j < 230; j++)
 	{
-		for (int i = 0; i < 30; i++)
+		for (int i = 0; i < 5; i++)
 		{
 			////do some testing with physics parenting!
 			GEEntityRigidBody* BodyA = new GEEntityRigidBody();
-			BodyA->SetPosition(glm::ballRand(3.2f) + glm::vec3(0, 5*j, 0));
+			BodyA->SetPosition(glm::ballRand(1.2f) + glm::vec3(0, 5*j, 0));
 			BodyA->SetRotation(45, glm::vec3(1, 0, 0));
 
 			GEEntityRenderable* VisBodyA = new GEEntityRenderable();

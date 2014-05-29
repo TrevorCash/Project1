@@ -318,6 +318,15 @@ glm::mat4 GEEntity::GetInterpolatedTransform(const float interpolation, bool glo
 
 
 //bounds
+//for more "physical entities, extend this method to update AABB box if geometry changes.
+void GEEntity::RecalculateLocalAABB()
+{
+	GEEntity::OnRecalculateLocalAABB();
+}
+void GEEntity::OnRecalculateLocalAABB()
+{
+	//TODO notify scene graph????
+}
 GEAABB GEEntity::GetLocalAABB()
 {
 	return localBoundingBox;

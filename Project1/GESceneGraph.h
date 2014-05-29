@@ -13,10 +13,15 @@ public:
 	~GESceneGraph();
 
 	void AddEntity(GEEntity* ent);
+	void RemoveEntity(GEEntity* ent);
 
 private:
 
+
 	GEOctNode* rootNode;
+
+	//bounds of root cell to work off of;
+	GEAABB rootBounds;
 
 };
 

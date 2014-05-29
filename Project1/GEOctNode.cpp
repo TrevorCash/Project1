@@ -12,3 +12,22 @@ GEOctNode::GEOctNode(const GEOctNode* parent) : GEBase()
 GEOctNode::~GEOctNode()
 {
 }
+
+
+
+GEOctNode* GEOctNode::GrowUpTowardsPoint(glm::vec3 point)
+{
+//	if (parent != nullptr)
+//	{
+//	
+//		GEOctNode* newParent = new GEOctNode(nullptr);
+//		newParent->nodes[]
+//	
+//	}
+//
+}
+
+void GEOctNode::GrowDown()
+{
+
+}

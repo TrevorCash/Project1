@@ -61,6 +61,8 @@ public:
 	virtual glm::mat4 GetInterpolatedTransform(const float interpolation, bool global);
 
 	//bounds
+	virtual void RecalculateLocalAABB();
+	virtual void OnRecalculateLocalAABB();
 	virtual GEAABB GetLocalAABB();
 	virtual GEAABB GetGlobalAABB();
 

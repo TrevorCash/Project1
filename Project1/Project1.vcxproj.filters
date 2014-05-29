@@ -115,7 +115,7 @@
       <Filter>Header Files\Scene</Filter>
     </ClInclude>
     <ClInclude Include="GEAABB.h">
-      <Filter>Header Files</Filter>
+      <Filter>Header Files\Geometry</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

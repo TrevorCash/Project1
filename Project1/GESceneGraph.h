@@ -12,7 +12,7 @@ public:
 	GESceneGraph();
 	~GESceneGraph();
 
-	void AddEntity();
+	void AddEntity(GEEntity* ent);
 
 private:
 

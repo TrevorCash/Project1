@@ -18,7 +18,6 @@ GEEntity::GEEntity(void) : GEBase()
 	orientation = glm::quat(1, 0, 0, 0);
 	lastOrientation = orientation;
 
-	
 	scale = glm::vec3(1, 1, 1);
 	lastScale = scale;
 
@@ -315,4 +314,15 @@ glm::mat4 GEEntity::GetInterpolatedTransform(const float interpolation, bool glo
 		else
 			return interpolatedTransform;
 	}
+}
+
+
+//bounds
+GEAABB GEEntity::GetLocalAABB()
+{
+	return localBoundingBox;
+}
+GEAABB GEEntity::GetGlobalAABB()
+{
+	return localBoundingBox + GetPosition(true);
 }

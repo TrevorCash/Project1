@@ -10,7 +10,7 @@ class GEOctNode :
 	public GEBase
 {
 public:
-	GEOctNode();
+	GEOctNode(const GEOctNode* parent);
 	~GEOctNode();
 
 	GEOctNode* AddEntity(GEEntity* ent);
@@ -21,12 +21,9 @@ private:
 
 	GEOctNode* GenerateNodeAtPos(glm::vec3 pos, int maxLevels);
 	
-
-
 	std::list<GEEntity*> entityList;
 	
-	
-	
+	const GEOctNode* parent;
 	GEOctNode* nodes[8];
 };
 

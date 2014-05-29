@@ -1,9 +1,11 @@
 #include "GEOctNode.h"
 
 
-GEOctNode::GEOctNode() : GEBase()
+GEOctNode::GEOctNode(const GEOctNode* parent) : GEBase()
 {
+	this->parent = parent;
 	*nodes = {nullptr};
+
 }
 
 

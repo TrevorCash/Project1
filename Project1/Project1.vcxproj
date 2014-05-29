@@ -1,0 +1,144 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="12.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|Win32">
+      <Configuration>Debug</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|Win32">
+      <Configuration>Release</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <ProjectGuid>{60F6F7A6-C565-4EFE-832D-13837862A1DF}</ProjectGuid>
+    <RootNamespace>Project1</RootNamespace>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <PlatformToolset>v120</PlatformToolset>
+    <CharacterSet>MultiByte</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <PlatformToolset>v120</PlatformToolset>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <CharacterSet>MultiByte</CharacterSet>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup />
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <Optimization>Disabled</Optimization>
+      <SDLCheck>true</SDLCheck>
+      <AdditionalIncludeDirectories>C:\newton-dynamics-svn\packages\dCustomJoints;C:\newton-dynamics-svn\packages\dContainers;C:\newton-dynamics-svn\packages\dMath;C:\newton-dynamics-svn\coreLibrary_300\source\newton;C:\enet-1.3.11\include;C:\assimp--3.0.1270-sdk\include;C:\glew-1.10.0\include;C:\glfw-3.0.3\include;C:\glm;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>GLEW_STATIC;_CRT_SECURE_NO_WARNINGS;_MBCS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <BrowseInformation>true</BrowseInformation>
+    </ClCompile>
+    <Link>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <AdditionalDependencies>glfw3.lib;opengl32.lib;glu32.lib;glew32s.lib;newton_d.lib;assimp.lib;enet.lib;ws2_32.lib;winmm.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>C:\enet-1.3.11;C:\assimp--3.0.1270-sdk\lib\assimp_release-dll_win32;C:\newton-dynamics-svn\coreLibrary_300\projects\windows\project_vs2010_dll\Win32\newton\Debug;C:\glew-1.10.0\lib\Release\Win32;C:\glfw-3.0.3\src\Release;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+    </Link>
+    <Bscmake>
+      <PreserveSbr>true</PreserveSbr>
+    </Bscmake>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <Optimization>MaxSpeed</Optimization>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <SDLCheck>true</SDLCheck>
+      <AdditionalIncludeDirectories>C:\newton-dynamics-svn\coreLibrary_300\source\newton;C:\newton-dynamics-svn\packages\dNewton;C:\newton-dynamics-svn\packages\dCustomJoints;C:\newton-dynamics-svn\packages\dMath;C:\enet-1.3.11\include;C:\assimp--3.0.1270-sdk\include;C:\glew-1.10.0\include;C:\glfw-3.0.3\include;C:\glm;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>GLEW_STATIC;_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <BrowseInformation>true</BrowseInformation>
+      <UndefinePreprocessorDefinitions>%(UndefinePreprocessorDefinitions)</UndefinePreprocessorDefinitions>
+    </ClCompile>
+    <Link>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <OptimizeReferences>true</OptimizeReferences>
+      <AdditionalDependencies>newton.lib;dNewton.lib;glfw3.lib;opengl32.lib;glu32.lib;glew32s.lib;assimp.lib;enet.lib;ws2_32.lib;winmm.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>C:\newton-dynamics-svn\coreLibrary_300\projects\windows\project_vs2010_dll\Win32\newton\release;C:\newton-dynamics-svn\packages\projects\visualStudio_2010_dll\Win32\dNewton\release;C:\assimp--3.0.1270-sdk\lib\assimp_release-dll_win32;C:\glew-1.10.0\lib\Release\Win32;C:\enet-1.3.11;C:\glfw-3.0.3\src\Release;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <ImageHasSafeExceptionHandlers>false</ImageHasSafeExceptionHandlers>
+    </Link>
+    <Bscmake>
+      <PreserveSbr>true</PreserveSbr>
+    </Bscmake>
+    <ProjectReference>
+      <UseLibraryDependencyInputs>false</UseLibraryDependencyInputs>
+    </ProjectReference>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <ClInclude Include="EasyInput.h" />
+    <ClInclude Include="GEApp.h" />
+    <ClInclude Include="GEBase.h" />
+    <ClInclude Include="GEClient.h" />
+    <ClInclude Include="GEConsole.h" />
+    <ClInclude Include="GEContext.h" />
+    <ClInclude Include="GEEntity.h" />
+    <ClInclude Include="GEEntityCamera.h" />
+    <ClInclude Include="GEEntityRenderable.h" />
+    <ClInclude Include="GEEntityRigidBody.h" />
+    <ClInclude Include="GEMathHelpers.h" />
+    <ClInclude Include="GEMeshData.h" />
+    <ClInclude Include="GEModelData.h" />
+    <ClInclude Include="GEModelLoader.h" />
+    <ClInclude Include="GENetworkManager.h" />
+    <ClInclude Include="GEOctNode.h" />
+    <ClInclude Include="GEPhysicsHeaders.h" />
+    <ClInclude Include="GERenderer.h" />
+    <ClInclude Include="GESceneGraph.h" />
+    <ClInclude Include="GEShader.h" />
+    <ClInclude Include="GEShaderProgram.h" />
+    <ClInclude Include="GETriangle.h" />
+    <ClInclude Include="GEWorld.h" />
+    <ClInclude Include="LowLevelGraphics.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="EasyInput.cpp" />
+    <ClCompile Include="GEApp.cpp" />
+    <ClCompile Include="GEBase.cpp" />
+    <ClCompile Include="GEClient.cpp" />
+    <ClCompile Include="GEConsole.cpp" />
+    <ClCompile Include="GEContext.cpp" />
+    <ClCompile Include="GEEntity.cpp" />
+    <ClCompile Include="GEEntityCamera.cpp" />
+    <ClCompile Include="GEEntityRenderable.cpp" />
+    <ClCompile Include="GEEntityRigidBody.cpp" />
+    <ClCompile Include="GEMathHelpers.cpp" />
+    <ClCompile Include="GEMeshData.cpp" />
+    <ClCompile Include="GEModelData.cpp" />
+    <ClCompile Include="GEModelLoader.cpp" />
+    <ClCompile Include="GENetworkManager.cpp" />
+    <ClCompile Include="GEOctNode.cpp" />
+    <ClCompile Include="GERenderer.cpp" />
+    <ClCompile Include="GESceneGraph.cpp" />
+    <ClCompile Include="GEShader.cpp" />
+    <ClCompile Include="GEShaderProgram.cpp" />
+    <ClCompile Include="GEWorld.cpp" />
+    <ClCompile Include="main.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="fragShader.shad" />
+    <None Include="vertShader.shad" />
+  </ItemGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+</Project>

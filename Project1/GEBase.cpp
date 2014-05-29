@@ -1,0 +1,102 @@
+#include "GEBase.h"
+#include "GEApp.h"
+#include "GEConsole.h"
+#include "GENetworkManager.h"
+#include <iostream>
+#include <sstream>
+#include <string>
+
+GEBase::GEBase(void)
+{
+	deleted = false;
+	subscriptions = 0;
+	isNetworked = false;
+}
+
+
+GEBase::~GEBase(void)
+{
+}
+
+
+GECLASSTYPE GEBase::ClassType()
+{
+	return GECLASSTYPE::Base;
+}
+
+
+void GEBase::AddToSimulation()
+{
+	GEApp::GameEngine()->Console()->AddToSimulation(this);
+}
+
+
+void GEBase::EnableNetworking()
+{
+	if (isNetworked == false)
+		GEApp::GameEngine()->GetNetwork()->AddObject(this);
+	else
+		std::cout << "Object Already Networked!";
+}
+
+void GEBase::PackNetworkUpdate(std::stringstream &dataStream)
+{
+	//baseclass PackNewtorkUpdate
+	dataStream << networkId;
+}
+void GEBase::UnpackNetworkUpdate(std::stringstream &dataStream)
+{
+	dataStream >> networkId;
+}
+
+
+void GEBase::OnBaseTickUpdate(double deltaTime)
+{
+}
+
+
+//marks the object as ready to be freed - the console frees the object when garbage collection
+//occurs
+void GEBase::Delete()
+{
+	deleted = true;
+}
+
+bool GEBase::IsDeleted()
+{
+	return deleted;
+}
+bool GEBase::IsObject()
+{
+	return !deleted;
+}
+
+//subscriptions
+void GEBase::IncreaseSubscriptions()
+{
+	subscriptions++;
+}
+void GEBase::DecreaseSubscriptions()
+{
+	subscriptions--;
+}
+int GEBase::NumSubscriptions()
+{
+	return subscriptions;
+}
+
+
+
+
+void GEBase::SetNickName(std::string name)
+{
+	nickName = name;
+	bool success = GEApp::GameEngine()->Console()->AddToNickNames(this);
+	if (!success)
+		std::cout << "Unable To Add NickName to console for object: " << this << std::endl;
+}
+
+std::string GEBase::NickName()
+{
+	return nickName;
+}

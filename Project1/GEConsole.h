@@ -11,6 +11,7 @@ public:
 	~GEConsole();
 
 	void CollectGarbage();
+	unsigned int GetUnfreedObjectCount(bool verbose = true);
 
 	void BaseTickUpdate(double deltaTime);
 	void AddToSimulation(GEBase* object);

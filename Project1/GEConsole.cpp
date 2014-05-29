@@ -31,6 +31,29 @@ void GEConsole::CollectGarbage()
 	}
 }
 
+//returns how many objects are currently marked as deleted, but are still not freed
+//call after collectgarbage to see the most recent state.
+unsigned int GEConsole::GetUnfreedObjectCount(bool verbose)
+{
+	unsigned int unfreedCnt = 0;
+	for (std::list<GEBase*>::iterator it = objectSimulationList.begin(); it != objectSimulationList.end(); it++)
+	{
+		GEBase* obj = *it;
+		if (obj->IsDeleted())
+		{
+			if (verbose)
+			{
+				std::cout << "Object Not Freed: " << obj->NickName();
+				std::cout << "---NumSubscriptions: " << obj->NumSubscriptions() << std::endl;
+			}
+				
+				
+			unfreedCnt++;
+		}
+	}
+	return unfreedCnt;
+}
+
 
 //Updates All Objects In the Engine..
 void GEConsole::BaseTickUpdate(double deltaTime)

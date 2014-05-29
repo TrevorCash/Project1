@@ -91,7 +91,7 @@ void GEWorld::Initialize()
 
 	
 	GEEntityRigidBody* prevBody = nullptr;
-	for (int j = 0; j < 230; j++)
+	for (int j = 0; j < 630; j++)
 	{
 		for (int i = 0; i < 5; i++)
 		{

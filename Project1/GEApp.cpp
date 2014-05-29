@@ -14,6 +14,7 @@ GEApp* GEApp::globalGameEngineInstance = nullptr;
 
 GEApp::GEApp(void)
 {
+	//comment
 	pConsole = new GEConsole();
 
 	pNetStatus = new GENetworkManager();

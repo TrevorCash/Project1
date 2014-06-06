@@ -58,7 +58,7 @@ void GEWorld::Initialize()
 	GEEntityRenderable* floor2Vis = new GEEntityRenderable();
 	floor2Vis->modelData = GEApp::globalGameEngineInstance->Renderer()->ModelData()[1];
 	floor2Vis->SetParent(floor2);
-	floor2->SetPosition(glm::vec3(200, 0, 0));
+	floor2->SetPosition(glm::vec3(120, 0, 0));
 	floor2->SetScale(glm::vec3(200, 400, 200));
 	floor2->SetFrozen(true);
 	
@@ -67,7 +67,7 @@ void GEWorld::Initialize()
 	GEEntityRenderable* floor3Vis = new GEEntityRenderable();
 	floor3Vis->modelData = GEApp::globalGameEngineInstance->Renderer()->ModelData()[1];
 	floor3Vis->SetParent(floor3);
-	floor3->SetPosition(glm::vec3(-200, 0, 0));
+	floor3->SetPosition(glm::vec3(-120, 0, 0));
 	floor3->SetScale(glm::vec3(200, 400, 200));
 	floor3->SetFrozen(true);
 
@@ -76,7 +76,7 @@ void GEWorld::Initialize()
 	GEEntityRenderable* floor4Vis = new GEEntityRenderable();
 	floor4Vis->modelData = GEApp::globalGameEngineInstance->Renderer()->ModelData()[1];
 	floor4Vis->SetParent(floor4);
-	floor4->SetPosition(glm::vec3(0, 0, 200));
+	floor4->SetPosition(glm::vec3(0, 0, 120));
 	floor4->SetScale(glm::vec3(200, 400, 200));
 	floor4->SetFrozen(true);
 
@@ -85,19 +85,19 @@ void GEWorld::Initialize()
 	GEEntityRenderable* floor5Vis = new GEEntityRenderable();
 	floor5Vis->modelData = GEApp::globalGameEngineInstance->Renderer()->ModelData()[1];
 	floor5Vis->SetParent(floor5);
-	floor5->SetPosition(glm::vec3(0, 0, -200));
+	floor5->SetPosition(glm::vec3(0, 0, -120));
 	floor5->SetScale(glm::vec3(200, 400, 200));
 	floor5->SetFrozen(true);
 
 	
 	GEEntityRigidBody* prevBody = nullptr;
-	for (int j = 0; j < 630; j++)
+	for (int j = 0; j < 1500; j++)
 	{
 		for (int i = 0; i < 5; i++)
 		{
 			////do some testing with physics parenting!
 			GEEntityRigidBody* BodyA = new GEEntityRigidBody();
-			BodyA->SetPosition(glm::ballRand(1.2f) + glm::vec3(0, 5*j, 0));
+			BodyA->SetPosition(glm::ballRand(2.2f) + glm::vec3(0, 5*j, 0));
 			BodyA->SetRotation(45, glm::vec3(1, 0, 0));
 
 			GEEntityRenderable* VisBodyA = new GEEntityRenderable();
@@ -116,14 +116,18 @@ void GEWorld::Initialize()
 void GEWorld::InitializeNewton()
 {
 	newtonWorld = NewtonCreate();
-	
+
+	NewtonSetThreadsCount(newtonWorld, 4);
+
+
 }
 
 
 //Updates the Logic In the world
 void GEWorld::BaseTickUpdate(double deltaTime)
 {
-	NewtonUpdate(newtonWorld, deltaTime);
+	NewtonUpdateAsync(newtonWorld, deltaTime);
+	NewtonWaitForUpdateToFinish(newtonWorld);
 	if (KeyHit(GLFW_KEY_DELETE))
 	{
 		GEApp::GameEngine()->Console()->FindObjectByNickName("mainfloor")->Delete();
@@ -164,7 +168,19 @@ void GENewton_ApplyForceAndTorqueCallback(const NewtonBody* body, dFloat timeste
 	// for this tutorial the only external force in the Gravity
 	NewtonBodyGetMassMatrix(body, &mass, &Ixx, &Iyy, &Izz);
 
-	dVector gravityForce(0.0f, mass * GEApp::GameEngine()->GetWorld()->gravity, 0.0f, 1.0f);
+	//dVector gravityForce(0.0f, mass * GEApp::GameEngine()->GetWorld()->gravity, 0.0f, 1.0f);
+
+	GEEntity* cam = (GEEntity*) GEApp::GameEngine()->Console()->FindObjectByNickName("cam");
+	glm::vec3 disp = ((GEEntity*)NewtonBodyGetUserData(body))->GetPosition() - cam->GetPosition() - cam->GetForward()*100.0f;
+	disp *= -5.0;
+
+	double gravL = 10000.0/disp.length();
+	glm::vec3 grav = glm::normalize(disp)*(float)gravL;
+
+	dVector gravityForce((float)grav.x, (float)grav.y, (float)grav.z, 1.0f);
+
+
+
 	NewtonBodySetForce(body, &gravityForce[0]);
 }
 

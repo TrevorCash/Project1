@@ -42,9 +42,11 @@ void GERenderer::Render(GEClient* client, GEWorld* world, float interpolation)
 {
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
+	double timeOfRender = glfwGetTime();
+
 	GEEntityCamera* currCam = client->GetCamera();
 
-	glm::mat4 WorldToCamera = glm::inverse(currCam->GetInterpolatedTransform(interpolation, true));
+	glm::mat4 WorldToCamera = glm::inverse(currCam->GetInterpolatedTransform(interpolation, true, timeOfRender));
 	glm::mat4 CameraToScreen = glm::perspective(45.0f, 4.0f / 3.0f, 0.1f, 1000.0f);
 	glm::mat4 NormalMatrix = glm::transpose(glm::inverse(WorldToCamera));
 	glm::mat4 WorldToScreen = CameraToScreen * WorldToCamera;
@@ -61,6 +63,7 @@ void GERenderer::Render(GEClient* client, GEWorld* world, float interpolation)
 	//tell the shader the normaltrasformmatrix
 	//glUniformMatrix4fv(NormalToCamera_Loc, 1, GL_FALSE, glm::value_ptr(NormalMatrix));
 
+
 	for (std::list<GEEntityRenderable*>::iterator it = entityList.begin(); it != entityList.end(); it++)
 	{		
 
@@ -68,7 +71,10 @@ void GERenderer::Render(GEClient* client, GEWorld* world, float interpolation)
 
 		if (ent->IsObject())
 		{
-			glm::mat4 localToWorld = ent->GetInterpolatedTransform(interpolation,true);
+			
+			glm::mat4 localToWorld = ent->GetInterpolatedTransform(interpolation, true, timeOfRender);
+
+
 			glm::mat4 localToScreen = WorldToScreen * localToWorld;
 
 			//tell shader how to get from object cords to world cords.

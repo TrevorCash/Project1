@@ -21,6 +21,8 @@ GEEntity::GEEntity(void) : GEBase()
 	scale = glm::vec3(1, 1, 1);
 	lastScale = scale;
 
+	CurInterpTransformTag = -1;
+
 	parent = nullptr;
 
 	AddToSimulation();
@@ -291,7 +293,7 @@ glm::mat4 GEEntity::GetTransform(GEEntity* referenceEntity)
 }
 
 ////to be used by renderer only - returns an interpolated transform...
-glm::mat4 GEEntity::GetInterpolatedTransform(const float interpolation, bool global)
+glm::mat4 GEEntity::GetInterpolatedTransform(const float interpolation, bool global, double bakeUniqueTag)
 {
 	glm::quat slerpedOrientation = glm::slerp(lastOrientation, orientation, interpolation);
 	glm::vec3 interpolatedPos = lastPos + (pos - lastPos)*interpolation;
@@ -309,7 +311,20 @@ glm::mat4 GEEntity::GetInterpolatedTransform(const float interpolation, bool glo
 	{
 		if (parent != nullptr)
 		{
-			return  parent->GetInterpolatedTransform(interpolation, true) * interpolatedTransform;
+			if (CurInterpTransformTag == bakeUniqueTag)
+			{
+				return CurInterpTransform;
+			}
+			else
+			{
+				CurInterpTransform = parent->GetInterpolatedTransform(interpolation, true, bakeUniqueTag) * interpolatedTransform;
+				CurInterpTransformTag = bakeUniqueTag;
+				return  CurInterpTransform;
+			}
+
+				
+		
+		
 		}
 		else
 			return interpolatedTransform;

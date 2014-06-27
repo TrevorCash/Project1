@@ -58,7 +58,7 @@ public:
 	//transformations
 	virtual glm::mat4 GetTransform(bool global = false);
 	virtual glm::mat4 GetTransform(GEEntity* referenceEntity);
-	virtual glm::mat4 GetInterpolatedTransform(const float interpolation, bool global);
+	virtual glm::mat4 GetInterpolatedTransform(const float interpolation, bool global, double bakeUniqueTag);
 
 	//bounds
 	virtual void RecalculateLocalAABB();
@@ -74,6 +74,10 @@ protected:
 	glm::vec3 lastPos;
 	glm::vec3 lastScale;
 	glm::quat lastOrientation;
+
+	//render transform baking.
+	double CurInterpTransformTag;
+	glm::mat4 CurInterpTransform;
 
 	GEEntity* parent;//physical parent
 	//std::list<GEEntity*> children;//physical children.

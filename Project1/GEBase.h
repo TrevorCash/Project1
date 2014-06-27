@@ -10,7 +10,6 @@ enum GECLASSTYPE
 
 
 
-
 //a GEBase object is the base class for all classes in the engine, all objects are owned by the console
 //objects can be subscribed to sub systems like the world or renderer.  only the console has permission to actually delete an object
 //but the runtime code can call "Delete()" on an object and all subscriberers will remove the object from their containers and finally

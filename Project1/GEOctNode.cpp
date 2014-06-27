@@ -25,6 +25,7 @@ GEOctNode* GEOctNode::GrowUpTowardsPoint(glm::vec3 point)
 //	
 //	}
 //
+	return nullptr;
 }
 
 void GEOctNode::GrowDown()

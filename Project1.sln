@@ -15,15 +15,13 @@ Global
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
 		{60F6F7A6-C565-4EFE-832D-13837862A1DF}.Debug|Win32.ActiveCfg = Debug|Win32
 		{60F6F7A6-C565-4EFE-832D-13837862A1DF}.Debug|Win32.Build.0 = Debug|Win32
-		{60F6F7A6-C565-4EFE-832D-13837862A1DF}.Debug|x64.ActiveCfg = Debug|Win32
+		{60F6F7A6-C565-4EFE-832D-13837862A1DF}.Debug|x64.ActiveCfg = Release|x64
 		{60F6F7A6-C565-4EFE-832D-13837862A1DF}.Release|Win32.ActiveCfg = Release|Win32
 		{60F6F7A6-C565-4EFE-832D-13837862A1DF}.Release|Win32.Build.0 = Release|Win32
-		{60F6F7A6-C565-4EFE-832D-13837862A1DF}.Release|x64.ActiveCfg = Release|Win32
+		{60F6F7A6-C565-4EFE-832D-13837862A1DF}.Release|x64.ActiveCfg = Release|x64
+		{60F6F7A6-C565-4EFE-832D-13837862A1DF}.Release|x64.Build.0 = Release|x64
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
-	EndGlobalSection
-	GlobalSection(Performance) = preSolution
-		HasPerformanceSessions = true
 	EndGlobalSection
 EndGlobal

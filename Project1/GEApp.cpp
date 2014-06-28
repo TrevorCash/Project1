@@ -49,6 +49,7 @@ GEApp::~GEApp(void)
 
 void GEApp::Initialize()
 {
+	PrintEngineSpecs();
 	//this doesnt neccessarily need to be here.
 	std::cout << "Is This A Client Or Server? (c/s): ";
 	char answer;
@@ -69,6 +70,16 @@ void GEApp::Initialize()
 	pWorld->Initialize();
 	pContext->HideMouse();
 }
+void GEApp::PrintEngineSpecs()
+{
+	int* i = new int;
+	std::cout << i;
+	delete i;
+	i = nullptr;
+}
+
+
+
 
 void GEApp::Run(void)
 {

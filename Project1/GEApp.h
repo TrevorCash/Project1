@@ -25,6 +25,8 @@ public:
 
 	void Run();
 	void Initialize();
+	void PrintEngineSpecs();
+
 
 	//"global" access to major parts of engine.
 	inline GENetworkManager* GetNetwork()		{ return pNetStatus; }
@@ -37,7 +39,6 @@ public:
 
 
 private:
-
 	
 	double appTime;
 

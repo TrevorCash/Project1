@@ -160,7 +160,7 @@ void GEEntityRigidBody::SetScale(glm::vec3 sc)
 void GEEntityRigidBody::SetRotation(float angle, glm::vec3 axis)
 {
 	GEEntity::SetRotation(angle, axis);
-	std::cout << "Not Yet Supported" << std::endl;
+	//std::cout << "Not Yet Supported" << std::endl;
 	//if (!GetParent())
 	//	NewtonBodySetMatrix(PhysBody, &GlmToNewt(GetTransform())[0][0]);
 	//else

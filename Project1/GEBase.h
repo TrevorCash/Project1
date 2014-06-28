@@ -2,6 +2,7 @@
 #define GE_BASE
 
 #include <string>
+#include <iostream>
 
 enum GECLASSTYPE
 {
@@ -45,6 +46,7 @@ public:
 
 	virtual void SetNickName(std::string name);
 	virtual std::string NickName();
+
 
 
 protected:

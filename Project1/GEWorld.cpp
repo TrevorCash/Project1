@@ -91,9 +91,9 @@ void GEWorld::Initialize()
 
 	
 	GEEntityRigidBody* prevBody = nullptr;
-	for (int j = 0; j < 2000; j++)
+	for (int j = 0; j < 200; j++)
 	{
-		for (int i = 0; i < 5; i++)
+		for (int i = 0; i < 100; i++)
 		{
 			////do some testing with physics parenting!
 			GEEntityRigidBody* BodyA = new GEEntityRigidBody();
@@ -171,7 +171,7 @@ void GENewton_ApplyForceAndTorqueCallback(const NewtonBody* body, dFloat timeste
 	//dVector gravityForce(0.0f, mass * GEApp::GameEngine()->GetWorld()->gravity, 0.0f, 1.0f);
 
 	GEEntity* cam = (GEEntity*) GEApp::GameEngine()->Console()->FindObjectByNickName("cam");
-	glm::vec3 disp = ((GEEntity*)NewtonBodyGetUserData(body))->GetPosition() - cam->GetPosition() - cam->GetForward()*100.0f;
+	glm::vec3 disp = ((GEEntity*)NewtonBodyGetUserData(body))->GetPosition() - cam->GetPosition() - cam->GetForward()*50.0f;
 	disp *= -5.0;
 
 	double gravL = 10000.0/disp.length();

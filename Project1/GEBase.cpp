@@ -8,9 +8,7 @@
 
 GEBase::GEBase(void)
 {
-	deleted = false;
-	subscriptions = 0;
-	isNetworked = false;
+	deleted = true;
 }
 
 
@@ -23,6 +21,16 @@ GECLASSTYPE GEBase::ClassType()
 {
 	return GECLASSTYPE::Base;
 }
+
+void GEBase::Initialize()
+{
+	deleted = false;
+	subscriptions = 0;
+	isNetworked = false;
+}
+
+
+
 
 
 void GEBase::AddToSimulation()
@@ -55,21 +63,6 @@ void GEBase::OnBaseTickUpdate(double deltaTime)
 }
 
 
-//marks the object as ready to be freed - the console frees the object when garbage collection
-//occurs
-void GEBase::Delete()
-{
-	deleted = true;
-}
-
-bool GEBase::IsDeleted()
-{
-	return deleted;
-}
-bool GEBase::IsObject()
-{
-	return !deleted;
-}
 
 //subscriptions
 void GEBase::IncreaseSubscriptions()
@@ -99,4 +92,31 @@ void GEBase::SetNickName(std::string name)
 std::string GEBase::NickName()
 {
 	return nickName;
+}
+
+
+
+
+//marks the object as ready to be freed - the console frees the object when garbage collection
+//occurs
+void GEBase::Delete()
+{
+	deleted = true;
+	GEBase::pool.DeleteObject(this->poolIndx);
+}
+
+bool GEBase::IsDeleted()
+{
+	return deleted;
+}
+bool GEBase::IsObject()
+{
+	return !deleted;
+}
+GEBase* GEBase::Create()
+{
+	unsigned long int idx;
+	GEBase* pNewObject = GEBase::pool.CreateObject(idx);
+	pNewObject->poolIndx = idx;
+	pNewObject->Initialize();
 }

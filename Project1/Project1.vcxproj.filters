@@ -40,6 +40,12 @@
     <Filter Include="Header Files\Geometry">
       <UniqueIdentifier>{64723eb6-ace8-47d6-845b-6eca0563e1dc}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\Pooling">
+      <UniqueIdentifier>{c1b7075a-48ac-4cd2-92b9-b68ceec86bd5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Pooling">
+      <UniqueIdentifier>{cd73be1d-a240-43ed-b2c6-9e539850c83f}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="GEBase.h">
@@ -117,6 +123,9 @@
     <ClInclude Include="GEAABB.h">
       <Filter>Header Files\Geometry</Filter>
     </ClInclude>
+    <ClInclude Include="GEObjectPool.h">
+      <Filter>Header Files\Pooling</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="GEBase.cpp">
@@ -187,6 +196,9 @@
     </ClCompile>
     <ClCompile Include="GEAABB.cpp">
       <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="GEObjectPool.cpp">
+      <Filter>Source Files\Pooling</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

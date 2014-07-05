@@ -3,6 +3,7 @@
 
 #include <string>
 #include <iostream>
+#include "GEObjectPool.h"
 
 enum GECLASSTYPE
 {
@@ -25,6 +26,9 @@ public:
 
 	virtual GECLASSTYPE ClassType();
 
+
+	virtual void Initialize();
+
 	virtual void AddToSimulation();
 	virtual void EnableNetworking();
 
@@ -36,10 +40,6 @@ public:
 	virtual void UnpackNetworkUpdate(std::stringstream &dataStream);
 
 
-	virtual void Delete();//marks the object for deletion next time the console tries to update it.
-	bool IsDeleted();//if the object is marked for deletion.
-	bool IsObject();//is it a valid object (not deleted)
-
 	virtual void IncreaseSubscriptions();
 	virtual void DecreaseSubscriptions();
 	int NumSubscriptions();
@@ -48,12 +48,21 @@ public:
 	virtual std::string NickName();
 
 
+	//Pooling functionality
+	static GEBase* Create();
+	virtual void Delete();//marks the object for deletion next time the console tries to update it.
+	bool IsDeleted();//if the object is marked for deletion.
+	bool IsObject();//is it a valid object (not deleted)
+
+	static GEObjectPool<GEBase> pool;
 
 protected:
 
 
 private:
 	bool deleted;
+	unsigned long int poolIndx;
+
 	int subscriptions;//how many "services" the object is subscribed to. a service is like a renderer or world.. 
 	std::string nickName;//user defined nick name for easy finds from the console object.
 	unsigned int networkId;//id for use in networking - identical objects across network will have identical networkId's

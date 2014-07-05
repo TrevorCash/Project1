@@ -144,6 +144,7 @@
     <ClInclude Include="GEModelData.h" />
     <ClInclude Include="GEModelLoader.h" />
     <ClInclude Include="GENetworkManager.h" />
+    <ClInclude Include="GEObjectPool.h" />
     <ClInclude Include="GEOctNode.h" />
     <ClInclude Include="GEPhysicsHeaders.h" />
     <ClInclude Include="GERenderer.h" />
@@ -171,6 +172,7 @@
     <ClCompile Include="GEModelData.cpp" />
     <ClCompile Include="GEModelLoader.cpp" />
     <ClCompile Include="GENetworkManager.cpp" />
+    <ClCompile Include="GEObjectPool.cpp" />
     <ClCompile Include="GEOctNode.cpp" />
     <ClCompile Include="GERenderer.cpp" />
     <ClCompile Include="GESceneGraph.cpp" />

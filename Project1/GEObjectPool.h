@@ -5,6 +5,7 @@
 #include <list>
 
 
+
 template <class ObjectType>
 class GEObjectPool
 {
@@ -17,6 +18,7 @@ public:
 		currentIndx = 0;
 		usedObjects = 0;
 	}
+
 	~GEObjectPool(){};
 
 	ObjectType* CreateObject(unsigned long int &indx)
@@ -32,21 +34,10 @@ public:
 		return &pool[currentIndx];
 	}
 
-	bool DeleteObject(unsigned long int objIndx)
-	{
-		pool[currentIndx].Delete();
-		usedObjects--;
-		currentIndx = objIndx;
-	}
-
 protected:
-	
 	std::vector<ObjectType> pool;
 	unsigned long int currentIndx;
 	unsigned long int usedObjects;
 };
-
-
-
 
 #endif

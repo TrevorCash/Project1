@@ -49,8 +49,8 @@ public:
 
 
 	//Pooling functionality
-	static GEBase* Create();
-	virtual void Delete();//marks the object for deletion next time the console tries to update it.
+	static GEBase* Create();//use instead of new!
+	virtual void Delete();//marks the object for deletion next time the console tries to update it. use isntead of delete!
 	bool IsDeleted();//if the object is marked for deletion.
 	bool IsObject();//is it a valid object (not deleted)
 

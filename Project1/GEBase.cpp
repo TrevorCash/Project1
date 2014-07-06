@@ -6,9 +6,13 @@
 #include <sstream>
 #include <string>
 
+
+GEObjectPool<GEBase> GEBase::pool = GEObjectPool<GEBase>(1000);
+
+
 GEBase::GEBase(void)
 {
-	deleted = true;
+	Initialize();
 }
 
 
@@ -102,7 +106,6 @@ std::string GEBase::NickName()
 void GEBase::Delete()
 {
 	deleted = true;
-	GEBase::pool.DeleteObject(this->poolIndx);
 }
 
 bool GEBase::IsDeleted()
@@ -119,4 +122,8 @@ GEBase* GEBase::Create()
 	GEBase* pNewObject = GEBase::pool.CreateObject(idx);
 	pNewObject->poolIndx = idx;
 	pNewObject->Initialize();
+	return pNewObject;
 }
+
+
+

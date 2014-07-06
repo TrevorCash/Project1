@@ -7,9 +7,6 @@
 #include <string>
 
 
-GEObjectPool<GEBase> GEBase::pool = GEObjectPool<GEBase>(1000);
-
-
 GEBase::GEBase(void)
 {
 	Initialize();
@@ -107,7 +104,6 @@ void GEBase::Delete()
 {
 	deleted = true;
 }
-
 bool GEBase::IsDeleted()
 {
 	return deleted;
@@ -115,14 +111,6 @@ bool GEBase::IsDeleted()
 bool GEBase::IsObject()
 {
 	return !deleted;
-}
-GEBase* GEBase::Create()
-{
-	unsigned long int idx;
-	GEBase* pNewObject = GEBase::pool.CreateObject(idx);
-	pNewObject->poolIndx = idx;
-	pNewObject->Initialize();
-	return pNewObject;
 }
 
 

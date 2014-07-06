@@ -48,20 +48,17 @@ public:
 	virtual std::string NickName();
 
 
-	//Pooling functionality
-	static GEBase* Create();//use instead of new!
+	//memory management
 	virtual void Delete();//marks the object for deletion next time the console tries to update it. use isntead of delete!
 	bool IsDeleted();//if the object is marked for deletion.
 	bool IsObject();//is it a valid object (not deleted)
 
-	static GEObjectPool<GEBase> pool;
 
 protected:
 
 
 private:
 	bool deleted;
-	unsigned long int poolIndx;
 
 	int subscriptions;//how many "services" the object is subscribed to. a service is like a renderer or world.. 
 	std::string nickName;//user defined nick name for easy finds from the console object.

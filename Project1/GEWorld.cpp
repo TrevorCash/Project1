@@ -55,30 +55,52 @@ void GEWorld::Initialize()
 
 
 
+	GEEntityRigidBody* rigid1 = new GEEntityRigidBody();
+	
+
+	GEEntityRenderable* a = new GEEntityRenderable();
+	a->modelData = GEApp::GameEngine()->GetRenderer()->ModelData()[0];
+
+	GEEntityRenderable* b = new GEEntityRenderable();
+	b->modelData = GEApp::GameEngine()->GetRenderer()->ModelData()[0];
+
+	b->SetParent(a);
+
+	GEEntityRenderable* c = new GEEntityRenderable();
+	c->modelData = GEApp::GameEngine()->GetRenderer()->ModelData()[0];
+
+	c->SetParent(a);
+
+	b->MoveBy(glm::vec3(5, 0, 0));
+	c->MoveBy(glm::vec3(5, 5, 0));
+	rigid1->SetNickName("bob");
+	a->SetParent(rigid1);
 
 
 
-	//GEEntityRigidBody* prevBody = nullptr;
-	//for (int j = 0; j < 200; j++)
-	//{
-	//	for (int i = 0; i < 100; i++)
-	//	{
-	//		////do some testing with physics parenting!
-	//		GEEntityRigidBody* BodyA = new GEEntityRigidBody();
-	//		BodyA->SetPosition(glm::ballRand(2.2f) + glm::vec3(0, 5*j, 0));
-	//		BodyA->SetRotation(45, glm::vec3(1, 0, 0));
 
-	//		GEEntityRenderable* VisBodyA = new GEEntityRenderable();
-	//		VisBodyA->modelData = GEApp::GameEngine()->Renderer()->ModelData()[1];
-	//		VisBodyA->SetParent(BodyA, false);
-	//		VisBodyA->SetColor(glm::linearRand(glm::vec4(1), glm::vec4(0)));
-	//		if (prevBody)
-	//			BodyA->SetParent(prevBody);
-	//		prevBody = BodyA;
-	//	}
 
-	//	prevBody = nullptr;
-	//}
+
+	GEEntityRigidBody* prevBody = nullptr;
+	for (int j = 0; j < 2000; j++)
+	{
+		for (int i = 0; i < 10; i++)
+		{
+			////do some testing with physics parenting!
+			GEEntityRigidBody* BodyA = new GEEntityRigidBody();
+			BodyA->SetPosition(glm::ballRand(2.2f) + glm::vec3(0, 5*j, 0));
+			BodyA->SetRotation(45, glm::vec3(1, 0, 0));
+
+			GEEntityRenderable* VisBodyA = new GEEntityRenderable();
+			VisBodyA->modelData = GEApp::GameEngine()->Renderer()->ModelData()[0];
+			VisBodyA->SetParent(BodyA, false);
+			VisBodyA->SetColor(glm::linearRand(glm::vec4(1), glm::vec4(0)));
+			if (prevBody)
+				BodyA->SetParent(prevBody);
+			prevBody = BodyA;
+		}
+		prevBody = nullptr;
+	}
 }
 
 void GEWorld::InitializeNewton()
@@ -98,12 +120,13 @@ void GEWorld::BaseTickUpdate(double deltaTime)
 	NewtonWaitForUpdateToFinish(newtonWorld);
 	if (KeyHit(GLFW_KEY_DELETE))
 	{
-		delete GEApp::GameEngine()->Console()->FindSubscriberByName("mainfloor");
+		delete (GEEntity*)GEApp::GameEngine()->Console()->FindSubscriberByName("bob");
 	}
 	if (KeyHit(GLFW_KEY_P))
 	{
 		
 	}
+
 }
 
 
@@ -128,6 +151,9 @@ void GEWorld::OnSubscriberRemove(GEBase* obj)
 //Newton Dynamics Callbacks
 void GENewton_ApplyForceAndTorqueCallback(const NewtonBody* body, dFloat timestep, int threadIndex)
 {
+	if (NewtonBodyGetUserData(body) == nullptr)
+		return;
+
 	dFloat Ixx;
 	dFloat Iyy;
 	dFloat Izz;

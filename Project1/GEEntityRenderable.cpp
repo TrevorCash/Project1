@@ -13,6 +13,7 @@ GEEntityRenderable::GEEntityRenderable() : GEEntity()
 
 GEEntityRenderable::~GEEntityRenderable()
 {
+	UnSubscribeFrom((GEBase*)GEApp::GameEngine()->GetRenderer());
 }
 
 

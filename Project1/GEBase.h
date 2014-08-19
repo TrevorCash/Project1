@@ -41,17 +41,24 @@ public:
 	bool IsObject();//is it a valid object (not deleted)
 
 	//subscription system
+	//////////////////////
 	virtual void SubscribeTo(GEBase* const obj);
 	virtual void UnSubscribeFrom(GEBase* const obj);
 	virtual void UnSubscribeFromAll();
+	virtual void UpdateSubscribersOfDeletion();
 
 	virtual void OnSubscriberAdd(GEBase* obj);
 	virtual void OnSubscriberRemove(GEBase* obj);
+	virtual void OnSubscriptionRemoved(GEBase* sub);
+
+	bool IsSubscribedTo(std::string nickName);
 
 
 	GEBase* FindSubscriberByName(const std::string &nick);
 	
-
+	std::map<std::string, GEBase*> subscribers;
+	std::map<std::string, GEBase*> subscriptions;
+	//////////////////////
 
 	virtual void SetNickName(std::string name);
 	virtual std::string NickName();
@@ -68,9 +75,8 @@ private:
 	bool deleted;
 	std::string nickName;//user defined nick name for easy finds from the console object.
 
-	std::map<std::string, GEBase*> subscribers;
-	std::vector<GEBase*> subscriptions;
 
+	
 
 
 	unsigned int networkId;//id for use in networking - identical objects across network will have identical networkId's

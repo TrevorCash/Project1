@@ -5,11 +5,11 @@
 
 int main(int argc, char** argv)
 {
-	GEApp::globalGameEngineInstance = new GEApp;
+	GEApp* app = new GEApp;
 	GEApp::GameEngine()->Initialize();
 	GEApp::GameEngine()->Run();
 
-	delete GEApp::GameEngine();
+	delete app;
 	GEApp::globalGameEngineInstance = nullptr;
 	return 0;
 }

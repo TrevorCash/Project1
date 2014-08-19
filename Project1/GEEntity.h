@@ -76,7 +76,7 @@ protected:
 	//axis aligned bounds of the the entity
 	GEAABB localBoundingBox;
 	
-	typedef std::map<GEEntity*, GEEntity*> children_map;
+	typedef std::map<std::string, GEEntity*> children_map;
 	typedef children_map::iterator children_it;
 	children_map children;
 };

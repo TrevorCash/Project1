@@ -18,11 +18,14 @@ public:
 	virtual void OnSubscriberAdd(GEBase* obj);
 	virtual void OnSubscriberRemove(GEBase* obj);
 
+	//basic garbase collection
+	void CollectGarbage();
+
+
+
 	void BaseTickUpdate(double deltaTime);
 
 private:
-	std::list<GEBase*> objectSimulationList;
-
 
 };
 

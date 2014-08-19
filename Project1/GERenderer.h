@@ -19,8 +19,6 @@ class GERenderer : public GEBase
 public:
 	GERenderer(GEContext* pContext);
 	~GERenderer(void);
-
-	void RemoveAllEntities();
 	
 	void Render(GEClient* client, GEWorld* world, float interpolation);
 	
@@ -39,10 +37,6 @@ private:
 
 	GEModelLoader modelLoader;
 	std::vector<GEModelData*> modelDataList;
-	
-	
-	//entity managment
-	std::list<GEEntityRenderable*> entityList;
 	
 	void DrawRenderable(GEEntityRenderable* entity);
 };

@@ -30,7 +30,18 @@ GEEntity::GEEntity(void) : GEBase()
 
 GEEntity::~GEEntity(void)
 {
+	//disconnect all children.
+	children_it it = children.begin();
+	while (it != children.end())
+	{
+		GEEntity* child = it->second;
+		std::cout << child;
+		it++;
+		child->SetParent(nullptr);
+		
+	}
 
+	UnSubscribeFrom((GEBase*)GEApp::GameEngine()->GetWorld());
 }
 
 GECLASSTYPE GEEntity::ClassType()
@@ -57,7 +68,7 @@ void GEEntity::SetParent(GEEntity* p, bool maintainGlobalTrans)
 		if (parent)
 		{
 			//remove child links on parent
-			parent->children.erase(this);
+			parent->children.erase(this->NickName());
 			if (maintainGlobalTrans)
 			{
 				pos = GetPosition(true);
@@ -97,7 +108,7 @@ void GEEntity::SetParent(GEEntity* p, bool maintainGlobalTrans)
 
 		
 		parent = p;
-		parent->children.insert(std::pair<GEEntity*, GEEntity*>(this, this));
+		parent->children.insert(std::pair<std::string, GEEntity*>(this->NickName(), this));
 	}
 }
 

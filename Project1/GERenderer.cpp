@@ -1,3 +1,4 @@
+#include "GEApp.h"
 #include "GERenderer.h"
 #include "GEWorld.h"
 #include "GEContext.h"
@@ -19,6 +20,8 @@ GERenderer::GERenderer(GEContext* pContext) : GEBase()
 	context = pContext;
 	LoadRenderingAssets();
 	Initialize();
+
+	UnSubscribeFrom((GEBase*)GEApp::Console());
 }
 
 
@@ -55,33 +58,26 @@ void GERenderer::Render(GEClient* client, GEWorld* world, float interpolation)
 	//glUniformMatrix4fv(NormalToCamera_Loc, 1, GL_FALSE, glm::value_ptr(NormalMatrix));
 
 
-	for (std::list<GEEntityRenderable*>::iterator it = entityList.begin(); it != entityList.end(); it++)
+	for (std::map<std::string, GEBase*>::iterator it = subscribers.begin(); it != subscribers.end(); it++)
 	{		
 
-		GEEntityRenderable* ent = *it;
+		GEEntityRenderable* ent = (GEEntityRenderable*)it->second;
 
-		if (ent->IsObject())
-		{
+		glm::mat4 localToWorld = ent->GetInterpolatedTransform(interpolation, true, timeOfRender);
+
+
+		glm::mat4 localToScreen = WorldToScreen * localToWorld;
+
+		//tell shader how to get from object cords to world cords.
+		glUniformMatrix4fv(LocalToWorld_Loc, 1, GL_FALSE, glm::value_ptr(localToWorld));
+		//tell shader how to get from object cords to screen cords.
+		glUniformMatrix4fv(LocalToScreen_Loc, 1, GL_FALSE, glm::value_ptr(localToScreen));
+		//tell chader about overall object coloring.
 			
-			glm::mat4 localToWorld = ent->GetInterpolatedTransform(interpolation, true, timeOfRender);
+		glUniform4fv(Color_Loc, 1,  glm::value_ptr(ent->GetColor()));
 
+		DrawRenderable(ent);
 
-			glm::mat4 localToScreen = WorldToScreen * localToWorld;
-
-			//tell shader how to get from object cords to world cords.
-			glUniformMatrix4fv(LocalToWorld_Loc, 1, GL_FALSE, glm::value_ptr(localToWorld));
-			//tell shader how to get from object cords to screen cords.
-			glUniformMatrix4fv(LocalToScreen_Loc, 1, GL_FALSE, glm::value_ptr(localToScreen));
-			//tell chader about overall object coloring.
-			
-			glUniform4fv(Color_Loc, 1,  glm::value_ptr(ent->GetColor()));
-
-			DrawRenderable(ent);
-		}
-		else//its deleted remove the object from this service, and tell the console that the entity is owned by one less service.
-		{
-			it = entityList.erase(it);	
-		}
 	}
 	glUseProgram(0);
 }

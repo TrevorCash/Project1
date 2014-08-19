@@ -125,7 +125,18 @@
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <Link>
       <Profile>true</Profile>
+      <AdditionalLibraryDirectories>C:\newton-dynamics-svn\coreLibrary_300\projects\windows\project_vs2010_dll\x64\newton\debug;C:\newton-dynamics-svn\packages\projects\visualStudio_2010_dll\Win32\dNewton\debug;C:\assimp--3.0.1270-sdk\lib\assimp_release-dll_x64;C:\glew-1.10.0\lib\Release\x64;C:\enet-1.3.11;$(SolutionDir)\ExternalLibs\glfw-3.0.4.bin.WIN64\lib-msvc120;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>newton_d.lib;dNewton_d.lib;glfw3.lib;opengl32.lib;glu32.lib;glew32.lib;assimp.lib;enet64.lib;ws2_32.lib;winmm.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
     </Link>
+    <ClCompile>
+      <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
+      <BrowseInformation>true</BrowseInformation>
+      <MinimalRebuild>true</MinimalRebuild>
+      <Optimization>Disabled</Optimization>
+      <WarningLevel>Level3</WarningLevel>
+      <AdditionalIncludeDirectories>C:\newton-dynamics-svn\coreLibrary_300\source\newton;C:\newton-dynamics-svn\packages\dNewton;C:\newton-dynamics-svn\packages\dCustomJoints;C:\newton-dynamics-svn\packages\dMath;C:\enet-1.3.11\include;C:\assimp--3.0.1270-sdk\include;C:\glew-1.10.0\include;$(SolutionDir)\ExternalLibs\glfw-3.0.4.bin.WIN64\include;C:\glm;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+    </ClCompile>
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="EasyInput.h" />

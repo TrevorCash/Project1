@@ -14,16 +14,29 @@ GEApp* GEApp::globalGameEngineInstance = nullptr;
 
 GEApp::GEApp(void)
 {
+	GEApp::globalGameEngineInstance = this;
 	//comment
+	pConsole = nullptr;
+	pNetStatus = nullptr;
+	pContext = nullptr;
+	pRenderer = nullptr;
+	pWorld = nullptr;
+	pClient = nullptr;
+
+
+
 	pConsole = new GEConsole();
+	pConsole->SetNickName("Console");
 
 	pNetStatus = new GENetworkManager();
 
 	pContext = new GEContext();
 	
 	pRenderer = new GERenderer(pContext);
+	pRenderer->SetNickName("Renderer");
 
 	pWorld = new GEWorld();
+	pWorld->SetNickName("World");
 
 	pClient = new GEClient();
 	
@@ -35,6 +48,7 @@ GEApp::GEApp(void)
 
 GEApp::~GEApp(void)
 {
+
 	//this order DOES matter.
 	delete pRenderer;
 	NewtonWorld* pNewt = pWorld->newtonWorld;

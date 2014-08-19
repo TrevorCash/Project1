@@ -16,7 +16,7 @@ GEBase::GEBase(void)
 	UINT64 val = UINT64(this);
 	nickName = std::to_string(val);
 
-	if (GEApp::GameEngine() != nullptr)
+	if (GEApp::GameEngine()->GetConsole() != nullptr)
 		SubscribeTo((GEBase*)GEApp::GameEngine()->GetConsole());
 }
 
@@ -24,6 +24,7 @@ GEBase::GEBase(void)
 GEBase::~GEBase(void)
 {
 	UnSubscribeFromAll();
+	UpdateSubscribersOfDeletion();
 }
 
 
@@ -80,22 +81,40 @@ void GEBase::SubscribeTo(GEBase* const obj)
 		return;
 
 	obj->subscribers.insert(std::pair<std::string,GEBase*>(this->nickName, this));
-	this->subscriptions.push_back(obj);
+	this->subscriptions.insert(std::pair<std::string, GEBase*>(obj->nickName, obj));
 	obj->OnSubscriberAdd(this);
 }
 void GEBase::UnSubscribeFrom(GEBase* const obj)
 {
 	obj->subscribers.erase(this->nickName);
 	obj->OnSubscriberRemove(this);
+	subscriptions.erase(obj->nickName);
 }
 void GEBase::UnSubscribeFromAll()
 {
-	for (GEBase* subscript : subscriptions){
-		UnSubscribeFrom(subscript);
+	std::map<std::string, GEBase*>::iterator it = subscriptions.begin();
+	while (it != subscriptions.end())
+	{
+		GEBase* sub = it->second;
+		it++;
+		UnSubscribeFrom(sub);
 	}
+
 	subscriptions.clear();
 }
 
+void GEBase::UpdateSubscribersOfDeletion()
+{
+	//notify all subscribers of deletion
+	std::map<std::string, GEBase*>::iterator it = subscribers.begin();
+	while (it != subscribers.end())
+	{
+		GEBase* subscriber = it->second;
+		it++;
+		subscriber->UnSubscribeFrom(this);
+		subscriber->OnSubscriptionRemoved(this);
+	}
+}
 //Subscribers should not be able have multiple entries into a subscription.
 void GEBase::OnSubscriberAdd(GEBase* obj)
 {
@@ -105,12 +124,23 @@ void GEBase::OnSubscriberRemove(GEBase* obj)
 {
 
 }
+void GEBase::OnSubscriptionRemoved(GEBase* sub)
+{
+
+}
+
+
+
+bool GEBase::IsSubscribedTo(std::string nickName)
+{
+	if (FindSubscriberByName(nickName))
+		return true;
+	else
+		return false;
+}
 
 GEBase* GEBase::FindSubscriberByName(const std::string &nick)
 {
-	if (subscribers.count(nick) == 0)
-		return nullptr;
-
 	std::map<std::string, GEBase*>::iterator it;
 	it = subscribers.find(nick);
 
@@ -128,13 +158,13 @@ GEBase* GEBase::FindSubscriberByName(const std::string &nick)
 void GEBase::SetNickName(std::string name)
 {
 
-	std::vector<GEBase*> oldSubscriptions = subscriptions;
+	std::map<std::string, GEBase*> oldSubscriptions = subscriptions;
 	UnSubscribeFromAll();
 	
 	nickName = name;
 	
-	for (GEBase* sub : oldSubscriptions)
-		SubscribeTo(sub);
+	for (auto pair : oldSubscriptions)
+		SubscribeTo(pair.second);
 
 }
 

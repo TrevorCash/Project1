@@ -12,7 +12,6 @@ public:
 	GEEntityRenderable();
 	virtual ~GEEntityRenderable();
 
-	void AddToRenderer();
 
 
 	virtual GECLASSTYPE ClassType();

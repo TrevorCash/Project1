@@ -15,24 +15,21 @@ GEBase::GEBase(void)
 	//nicknames default to address values..
 	UINT64 val = UINT64(this);
 	nickName = std::to_string(val);
+
+	if (GEApp::GameEngine() != nullptr)
+		SubscribeTo((GEBase*)GEApp::GameEngine()->GetConsole());
 }
 
 
 GEBase::~GEBase(void)
 {
-	
+	UnSubscribeFromAll();
 }
 
 
 GECLASSTYPE GEBase::ClassType()
 {
 	return GECLASSTYPE::Base;
-}
-
-
-void GEBase::AddToSimulation()
-{
-	GEApp::GameEngine()->Console()->AddToSimulation(this);
 }
 
 
@@ -111,11 +108,11 @@ void GEBase::OnSubscriberRemove(GEBase* obj)
 
 GEBase* GEBase::FindSubscriberByName(const std::string &nick)
 {
-	if (!subscribers.count(nickName))
+	if (subscribers.count(nick) == 0)
 		return nullptr;
 
 	std::map<std::string, GEBase*>::iterator it;
-	it = subscribers.find(nickName);
+	it = subscribers.find(nick);
 
 	if (it == subscribers.end())
 	{
@@ -130,8 +127,15 @@ GEBase* GEBase::FindSubscriberByName(const std::string &nick)
 
 void GEBase::SetNickName(std::string name)
 {
+
+	std::vector<GEBase*> oldSubscriptions = subscriptions;
+	UnSubscribeFromAll();
+	
 	nickName = name;
-	RefreshSubscriptions();
+	
+	for (GEBase* sub : oldSubscriptions)
+		SubscribeTo(sub);
+
 }
 
 std::string GEBase::NickName()
@@ -140,12 +144,3 @@ std::string GEBase::NickName()
 }
 
 
-
-//Private:
-void GEBase::RefreshSubscriptions()
-{
-	std::vector<GEBase*> oldSubscriptions = subscriptions;
-	UnSubscribeFromAll();
-	for (GEBase* sub : oldSubscriptions)
-		SubscribeTo(sub);
-}

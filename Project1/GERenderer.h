@@ -14,13 +14,12 @@ class GEShader;
 class GEShaderProgram;
 class GEEntityRenderable;
 
-class GERenderer
+class GERenderer : public GEBase
 {
 public:
 	GERenderer(GEContext* pContext);
 	~GERenderer(void);
 
-	void AddEntity(GEEntityRenderable* ent);
 	void RemoveAllEntities();
 	
 	void Render(GEClient* client, GEWorld* world, float interpolation);

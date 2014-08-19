@@ -126,11 +126,5 @@ void GEApp::Run(void)
 	}
 
 	std::cout << "Game Engine Shutdown...." << std::endl;
-	std::cout << "Printing Console Object Memory States..." << std::endl;
-	int x = pConsole->GetUnfreedObjectCount();
-	
-	//hang if there are memory leaks...
-	if (x)
-		std::cin >> x;
 
 }

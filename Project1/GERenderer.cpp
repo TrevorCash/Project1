@@ -14,8 +14,9 @@
 #include "glm\ext.hpp"
 #include "GLFW\glfw3.h"
 
-GERenderer::GERenderer(GEContext* pContext) : context(pContext)
+GERenderer::GERenderer(GEContext* pContext) : GEBase()
 {
+	context = pContext;
 	LoadRenderingAssets();
 	Initialize();
 }
@@ -24,18 +25,8 @@ GERenderer::GERenderer(GEContext* pContext) : context(pContext)
 GERenderer::~GERenderer(void)
 {
 	FreeRenderingAssets();
-	RemoveAllEntities();
 }
 
-void GERenderer::AddEntity(GEEntityRenderable* ent)
-{
-	entityList.push_back(ent);
-	ent->IncreaseSubscriptions();
-}
-void GERenderer::RemoveAllEntities()
-{
-	entityList.clear();
-}
 
 //Renders Through the given world.
 void GERenderer::Render(GEClient* client, GEWorld* world, float interpolation)
@@ -89,7 +80,6 @@ void GERenderer::Render(GEClient* client, GEWorld* world, float interpolation)
 		}
 		else//its deleted remove the object from this service, and tell the console that the entity is owned by one less service.
 		{
-			ent->DecreaseSubscriptions();
 			it = entityList.erase(it);	
 		}
 	}

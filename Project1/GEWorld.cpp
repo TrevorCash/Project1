@@ -17,15 +17,15 @@
 #include <iostream>
 #include <vector>
 
-GEWorld::GEWorld(void) : gravity(-9.81)
+GEWorld::GEWorld(void) : GEBase()
 {
+	gravity = -9.81;
 	InitializeNewton();
 }
 
 
 GEWorld::~GEWorld(void)
 {
-	RemoveAllEntities();
 }
 
 void GEWorld::Initialize()
@@ -53,8 +53,7 @@ void GEWorld::Initialize()
 	floor->SetFrozen(true);
 	floor->SetNickName("mainfloor");
 
-	GEEntityRigidBody* rigid1 = new GEEntityRigidBody();
-	rigid1->
+
 
 
 
@@ -99,7 +98,7 @@ void GEWorld::BaseTickUpdate(double deltaTime)
 	NewtonWaitForUpdateToFinish(newtonWorld);
 	if (KeyHit(GLFW_KEY_DELETE))
 	{
-		GEApp::GameEngine()->Console()->FindObjectByNickName("mainfloor")->Delete();
+		delete GEApp::GameEngine()->Console()->FindSubscriberByName("mainfloor");
 	}
 	if (KeyHit(GLFW_KEY_P))
 	{
@@ -107,23 +106,23 @@ void GEWorld::BaseTickUpdate(double deltaTime)
 	}
 }
 
-void GEWorld::AddEntity(GEEntity* entity)
+
+//subscription behalvior
+void GEWorld::OnSubscriberAdd(GEBase* obj)
 {
-	entityList.push_back(entity);
-	entity->IncreaseSubscriptions();
+	GEBase::OnSubscriberAdd(obj);
+	//TODO Throw Exception if not based on GEEntity
 }
 
-//marks all objects to be deleted and removed objects references from the worlds list.
-void GEWorld::RemoveAllEntities()
+
+void GEWorld::OnSubscriberRemove(GEBase* obj)
 {
-	for (std::list<GEEntity*>::iterator it = entityList.begin(); it != entityList.end(); it++)
-	{
-		GEEntity* ent = *it;
-		ent->Delete();
-		ent->DecreaseSubscriptions();
-	}
-	entityList.clear();
+	GEBase::OnSubscriberRemove(obj);
+
 }
+
+
+
 
 
 //Newton Dynamics Callbacks
@@ -139,7 +138,7 @@ void GENewton_ApplyForceAndTorqueCallback(const NewtonBody* body, dFloat timeste
 
 	//dVector gravityForce(0.0f, mass * GEApp::GameEngine()->GetWorld()->gravity, 0.0f, 1.0f);
 
-	GEEntity* cam = (GEEntity*) GEApp::GameEngine()->Console()->FindObjectByNickName("cam");
+	GEEntity* cam = (GEEntity*) GEApp::GameEngine()->Console()->FindSubscriberByName("cam");
 	glm::vec3 disp = ((GEEntity*)NewtonBodyGetUserData(body))->GetPosition() - cam->GetPosition() - cam->GetForward()*50.0f;
 	disp *= -5.0;
 

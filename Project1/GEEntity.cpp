@@ -25,8 +25,7 @@ GEEntity::GEEntity(void) : GEBase()
 
 	parent = nullptr;
 
-	AddToSimulation();
-	AddToWorld();
+	SubscribeTo((GEBase*)GEApp::GameEngine()->GetWorld());
 }
 
 GEEntity::~GEEntity(void)
@@ -37,41 +36,6 @@ GEEntity::~GEEntity(void)
 GECLASSTYPE GEEntity::ClassType()
 {
 	return GECLASSTYPE::Entity;
-}
-
-//adds this entity to the world (scene graph)
-void GEEntity::AddToWorld()
-{
-	GEApp::GameEngine()->World()->AddEntity(this);
-}
-
-//if we delete a top node - delete the children as well.
-void GEEntity::Delete()
-{
-	for (children_it it = children.begin(); it != children.end(); ++it)
-	{
-		it->first->Delete();
-	}
-	
-	GEBase::Delete();
-}
-
-//subscriptions extended to propigate down to children
-void GEEntity::IncreaseSubscriptions()
-{
-	GEBase::IncreaseSubscriptions();
-	for (children_it it = children.begin(); it != children.end(); ++it)
-	{
-		it->first->IncreaseSubscriptions();
-	}
-}
-void GEEntity::DecreaseSubscriptions()
-{
-	GEBase::DecreaseSubscriptions();
-	for (children_it it = children.begin(); it != children.end(); ++it)
-	{
-		it->first->DecreaseSubscriptions();
-	}
 }
 
 

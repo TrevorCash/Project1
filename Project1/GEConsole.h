@@ -4,7 +4,7 @@
 #include <map>
 
 //The Console is the subscription to all GEBase derived objects. (ie all GEBase derived object subscribe to the console)
-class GEConsole : GEBase
+class GEConsole : public GEBase
 {
 public:
 	GEConsole();

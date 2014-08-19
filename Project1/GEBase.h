@@ -3,6 +3,8 @@
 
 #include <string>
 #include <iostream>
+#include <map>
+#include <vector>
 
 enum GECLASSTYPE
 {
@@ -24,8 +26,6 @@ public:
 
 
 	virtual GECLASSTYPE ClassType();
-
-	virtual void AddToSimulation();
 	virtual void EnableNetworking();
 
 	//base tick from console system.
@@ -49,7 +49,7 @@ public:
 	virtual void OnSubscriberRemove(GEBase* obj);
 
 
-	virtual GEBase* FindSubscriberByName(const std::string &nick);
+	GEBase* FindSubscriberByName(const std::string &nick);
 	
 
 
@@ -62,9 +62,6 @@ protected:
 
 
 private:
-
-	//subscription system
-	void RefreshSubscriptions();
 
 
 

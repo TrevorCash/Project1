@@ -19,15 +19,6 @@ public:
 
 	virtual GECLASSTYPE ClassType();
 
-	virtual void AddToWorld();
-
-	//delete extended
-	virtual void Delete();
-
-	//subscriptions extended
-	void IncreaseSubscriptions();
-	void DecreaseSubscriptions();
-
 	//base tick extended
 	virtual void OnBaseTickUpdate(double deltaTime);
 

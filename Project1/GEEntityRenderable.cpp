@@ -7,18 +7,12 @@ GEEntityRenderable::GEEntityRenderable() : GEEntity()
 {
 	color = glm::vec4(1, 1, 1, 1);
 
-	AddToRenderer();
+	SubscribeTo((GEBase*)GEApp::GameEngine()->GetRenderer());
 }
 
 
 GEEntityRenderable::~GEEntityRenderable()
 {
-}
-
-
-void GEEntityRenderable::AddToRenderer()
-{
-	GEApp::GameEngine()->Renderer()->AddEntity(this);
 }
 
 

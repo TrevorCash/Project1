@@ -40,9 +40,18 @@ public:
 	bool IsDeleted();//if the object is marked for deletion.
 	bool IsObject();//is it a valid object (not deleted)
 
-	virtual void IncreaseSubscriptions();
-	virtual void DecreaseSubscriptions();
-	int NumSubscriptions();
+	//subscription system
+	virtual void SubscribeTo(GEBase* const obj);
+	virtual void UnSubscribeFrom(GEBase* const obj);
+	virtual void UnSubscribeFromAll();
+
+	virtual void OnSubscriberAdd(GEBase* obj);
+	virtual void OnSubscriberRemove(GEBase* obj);
+
+
+	virtual GEBase* FindSubscriberByName(const std::string &nick);
+	
+
 
 	virtual void SetNickName(std::string name);
 	virtual std::string NickName();
@@ -53,11 +62,27 @@ protected:
 
 
 private:
+
+	//subscription system
+	void RefreshSubscriptions();
+
+
+
 	bool deleted;
-	int subscriptions;//how many "services" the object is subscribed to. a service is like a renderer or world.. 
 	std::string nickName;//user defined nick name for easy finds from the console object.
+
+	std::map<std::string, GEBase*> subscribers;
+	std::vector<GEBase*> subscriptions;
+
+
+
 	unsigned int networkId;//id for use in networking - identical objects across network will have identical networkId's
 	bool isNetworked;
+
+
+
+
+
 };
 
 #endif

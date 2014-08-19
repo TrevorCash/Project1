@@ -3,29 +3,26 @@
 #include <list>
 #include <map>
 
-//The Console Owns All Objects and is responsible for the simple garbage collection.
-class GEConsole
+//The Console is the subscription to all GEBase derived objects. (ie all GEBase derived object subscribe to the console)
+class GEConsole : GEBase
 {
 public:
 	GEConsole();
 	~GEConsole();
 
-	void CollectGarbage();
-	unsigned int GetUnfreedObjectCount(bool verbose = true);
+
+	//subscription system
+	virtual void SubscribeTo(GEBase* const obj);
+	virtual void UnSubscribeFrom(GEBase* const obj);
+
+	virtual void OnSubscriberAdd(GEBase* obj);
+	virtual void OnSubscriberRemove(GEBase* obj);
 
 	void BaseTickUpdate(double deltaTime);
-	void AddToSimulation(GEBase* object);
-	bool AddToNickNames(GEBase* object);
-	GEBase* FindObjectByNickName(std::string nickName);
-
 
 private:
 	std::list<GEBase*> objectSimulationList;
-	void CleanSimulationList();
-
-	unsigned int deletedObjCount;
 
 
-	std::map<std::string, GEBase*> objectsByName;
 };
 

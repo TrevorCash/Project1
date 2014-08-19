@@ -53,64 +53,33 @@ void GEWorld::Initialize()
 	floor->SetFrozen(true);
 	floor->SetNickName("mainfloor");
 
-	//make a wall
-	GEEntityRigidBody* floor2 = new GEEntityRigidBody();
-	GEEntityRenderable* floor2Vis = new GEEntityRenderable();
-	floor2Vis->modelData = GEApp::globalGameEngineInstance->Renderer()->ModelData()[1];
-	floor2Vis->SetParent(floor2);
-	floor2->SetPosition(glm::vec3(120, 0, 0));
-	floor2->SetScale(glm::vec3(200, 400, 200));
-	floor2->SetFrozen(true);
-	
-	//make a wall
-	GEEntityRigidBody* floor3 = new GEEntityRigidBody();
-	GEEntityRenderable* floor3Vis = new GEEntityRenderable();
-	floor3Vis->modelData = GEApp::globalGameEngineInstance->Renderer()->ModelData()[1];
-	floor3Vis->SetParent(floor3);
-	floor3->SetPosition(glm::vec3(-120, 0, 0));
-	floor3->SetScale(glm::vec3(200, 400, 200));
-	floor3->SetFrozen(true);
+	GEEntityRigidBody* rigid1 = new GEEntityRigidBody();
+	rigid1->
 
-	//make a wall
-	GEEntityRigidBody* floor4 = new GEEntityRigidBody();
-	GEEntityRenderable* floor4Vis = new GEEntityRenderable();
-	floor4Vis->modelData = GEApp::globalGameEngineInstance->Renderer()->ModelData()[1];
-	floor4Vis->SetParent(floor4);
-	floor4->SetPosition(glm::vec3(0, 0, 120));
-	floor4->SetScale(glm::vec3(200, 400, 200));
-	floor4->SetFrozen(true);
 
-	//make a wall
-	GEEntityRigidBody* floor5 = new GEEntityRigidBody();
-	GEEntityRenderable* floor5Vis = new GEEntityRenderable();
-	floor5Vis->modelData = GEApp::globalGameEngineInstance->Renderer()->ModelData()[1];
-	floor5Vis->SetParent(floor5);
-	floor5->SetPosition(glm::vec3(0, 0, -120));
-	floor5->SetScale(glm::vec3(200, 400, 200));
-	floor5->SetFrozen(true);
 
-	
-	GEEntityRigidBody* prevBody = nullptr;
-	for (int j = 0; j < 200; j++)
-	{
-		for (int i = 0; i < 100; i++)
-		{
-			////do some testing with physics parenting!
-			GEEntityRigidBody* BodyA = new GEEntityRigidBody();
-			BodyA->SetPosition(glm::ballRand(2.2f) + glm::vec3(0, 5*j, 0));
-			BodyA->SetRotation(45, glm::vec3(1, 0, 0));
 
-			GEEntityRenderable* VisBodyA = new GEEntityRenderable();
-			VisBodyA->modelData = GEApp::GameEngine()->Renderer()->ModelData()[1];
-			VisBodyA->SetParent(BodyA, false);
-			VisBodyA->SetColor(glm::linearRand(glm::vec4(1), glm::vec4(0)));
-			if (prevBody)
-				BodyA->SetParent(prevBody);
-			prevBody = BodyA;
-		}
+	//GEEntityRigidBody* prevBody = nullptr;
+	//for (int j = 0; j < 200; j++)
+	//{
+	//	for (int i = 0; i < 100; i++)
+	//	{
+	//		////do some testing with physics parenting!
+	//		GEEntityRigidBody* BodyA = new GEEntityRigidBody();
+	//		BodyA->SetPosition(glm::ballRand(2.2f) + glm::vec3(0, 5*j, 0));
+	//		BodyA->SetRotation(45, glm::vec3(1, 0, 0));
 
-		prevBody = nullptr;
-	}
+	//		GEEntityRenderable* VisBodyA = new GEEntityRenderable();
+	//		VisBodyA->modelData = GEApp::GameEngine()->Renderer()->ModelData()[1];
+	//		VisBodyA->SetParent(BodyA, false);
+	//		VisBodyA->SetColor(glm::linearRand(glm::vec4(1), glm::vec4(0)));
+	//		if (prevBody)
+	//			BodyA->SetParent(prevBody);
+	//		prevBody = BodyA;
+	//	}
+
+	//	prevBody = nullptr;
+	//}
 }
 
 void GEWorld::InitializeNewton()

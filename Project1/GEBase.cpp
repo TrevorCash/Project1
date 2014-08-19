@@ -6,16 +6,21 @@
 #include <sstream>
 #include <string>
 
+//public:
 GEBase::GEBase(void)
 {
 	deleted = false;
-	subscriptions = 0;
 	isNetworked = false;
+	
+	//nicknames default to address values..
+	UINT64 val = UINT64(this);
+	nickName = std::to_string(val);
 }
 
 
 GEBase::~GEBase(void)
 {
+	
 }
 
 
@@ -71,18 +76,53 @@ bool GEBase::IsObject()
 	return !deleted;
 }
 
-//subscriptions
-void GEBase::IncreaseSubscriptions()
+//subscription system
+void GEBase::SubscribeTo(GEBase* const obj)
 {
-	subscriptions++;
+	if (obj == this)
+		return;
+
+	obj->subscribers.insert(std::pair<std::string,GEBase*>(this->nickName, this));
+	this->subscriptions.push_back(obj);
+	obj->OnSubscriberAdd(this);
 }
-void GEBase::DecreaseSubscriptions()
+void GEBase::UnSubscribeFrom(GEBase* const obj)
 {
-	subscriptions--;
+	obj->subscribers.erase(this->nickName);
+	obj->OnSubscriberRemove(this);
 }
-int GEBase::NumSubscriptions()
+void GEBase::UnSubscribeFromAll()
 {
-	return subscriptions;
+	for (GEBase* subscript : subscriptions){
+		UnSubscribeFrom(subscript);
+	}
+	subscriptions.clear();
+}
+
+//Subscribers should not be able have multiple entries into a subscription.
+void GEBase::OnSubscriberAdd(GEBase* obj)
+{
+	
+}
+void GEBase::OnSubscriberRemove(GEBase* obj)
+{
+
+}
+
+GEBase* GEBase::FindSubscriberByName(const std::string &nick)
+{
+	if (!subscribers.count(nickName))
+		return nullptr;
+
+	std::map<std::string, GEBase*>::iterator it;
+	it = subscribers.find(nickName);
+
+	if (it == subscribers.end())
+	{
+		std::cout << "GEBase: FindObjectByName - name not found" << std::endl;
+		return nullptr;
+	}
+	return it->second;
 }
 
 
@@ -91,12 +131,21 @@ int GEBase::NumSubscriptions()
 void GEBase::SetNickName(std::string name)
 {
 	nickName = name;
-	bool success = GEApp::GameEngine()->Console()->AddToNickNames(this);
-	if (!success)
-		std::cout << "Unable To Add NickName to console for object: " << this << std::endl;
+	RefreshSubscriptions();
 }
 
 std::string GEBase::NickName()
 {
 	return nickName;
+}
+
+
+
+//Private:
+void GEBase::RefreshSubscriptions()
+{
+	std::vector<GEBase*> oldSubscriptions = subscriptions;
+	UnSubscribeFromAll();
+	for (GEBase* sub : oldSubscriptions)
+		SubscribeTo(sub);
 }

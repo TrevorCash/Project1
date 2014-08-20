@@ -36,6 +36,8 @@ void GERenderer::Render(GEClient* client, GEWorld* world, float interpolation)
 {
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
+	
+
 	double timeOfRender = glfwGetTime();
 
 	GEEntityCamera* currCam = client->GetCamera();
@@ -80,6 +82,11 @@ void GERenderer::Render(GEClient* client, GEWorld* world, float interpolation)
 
 	}
 	glUseProgram(0);
+
+	glBegin(GL_LINE);
+	glVertex2d(0, 0);
+	glVertex2d(800, 600);
+	glEnd();
 }
 
 void GERenderer::LoadRenderingAssets()

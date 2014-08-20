@@ -114,7 +114,6 @@ void GEApp::Run(void)
 		{
 			preTickTime = glfwGetTime();
 			pContext->UpdateMouse();
-			pConsole->BaseTickUpdate(TickTime);
 			pNetStatus->Update();
 			pWorld->BaseTickUpdate(TickTime);
 			postTickTime = glfwGetTime();

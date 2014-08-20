@@ -82,7 +82,7 @@ void GEWorld::Initialize()
 
 
 	GEEntityRigidBody* prevBody = nullptr;
-	for (int j = 0; j < 2000; j++)
+	for (int j = 0; j < 20; j++)
 	{
 		for (int i = 0; i < 10; i++)
 		{
@@ -113,7 +113,7 @@ void GEWorld::InitializeNewton()
 }
 
 
-//Updates the Logic In the world
+//Updates the Logic In the world, and updates subscribers
 void GEWorld::BaseTickUpdate(double deltaTime)
 {
 	NewtonUpdateAsync(newtonWorld, deltaTime);
@@ -127,6 +127,12 @@ void GEWorld::BaseTickUpdate(double deltaTime)
 		
 	}
 
+	for (std::map<std::string, GEBase*>::iterator it = subscribers.begin(); it != subscribers.end(); it++)
+	{
+		GEBase* obj = it->second;
+		obj->OnBaseTickUpdate(deltaTime);
+	}
+	
 }
 
 

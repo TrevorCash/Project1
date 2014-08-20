@@ -4,6 +4,7 @@
 #include <map>
 
 //The Console is the subscription to all GEBase derived objects. (ie all GEBase derived object subscribe to the console)
+//Keeps Track Of All Objects
 class GEConsole : public GEBase
 {
 public:
@@ -17,13 +18,6 @@ public:
 
 	virtual void OnSubscriberAdd(GEBase* obj);
 	virtual void OnSubscriberRemove(GEBase* obj);
-
-	//basic garbase collection
-	void CollectGarbage();
-
-
-
-	void BaseTickUpdate(double deltaTime);
 
 private:
 

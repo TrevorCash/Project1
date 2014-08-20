@@ -33,16 +33,7 @@ void GEConsole::OnSubscriberRemove(GEBase* obj)
 
 
 
-//Updates All Subscribers
-void GEConsole::BaseTickUpdate(double deltaTime)
-{
 
-	for (std::map<std::string, GEBase*>::iterator it = subscribers.begin(); it != subscribers.end(); it++)
-	{
-		GEBase* obj = it->second;
-		obj->OnBaseTickUpdate(deltaTime);
-	}
-}
 
 
 

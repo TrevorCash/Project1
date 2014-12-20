@@ -1,0 +1,59 @@
+Top to bottom...
+
+
+Test Rigid Body Code More..
+Physics Scaling with parenting...
+Oct-Tree Spacial Searches
+Mult-thread Renderer alongside physics/world update
+OpenGL HUD Functions....
+OpenGL Convienience Rendering.....
+
+
+Joint Abstraction!
+	Ball
+	Motor
+	Rope
+	Elastic
+	Hydrolics
+	Gears
+
+	Maybe A Detailed Contraint Editor
+Player Entity Type
+
+
+
+Networking Integration!
+
+
+Sound
+Basic Texture Support
+Shadows/Pretty Shading.
+
+
+Make Engine An API!!! (Seperate DLL/Static Lib)
+
+
+Technic Pieces
+
+
+Basic Gameplay Tools (Jointing)
+
+
+Alpha Release
+
+
+
+Mod FileSystem
+Lua hooks
+
+
+
+
+
+
+
+
+
+
+
+

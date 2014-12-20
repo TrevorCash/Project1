@@ -23,8 +23,7 @@ GEBase::GEBase(void)
 
 GEBase::~GEBase(void)
 {
-	UnSubscribeFromAll();
-	UpdateSubscribersOfDeletion();
+	SendHardDeletionWarningToSubscriptions();
 }
 
 
@@ -63,6 +62,7 @@ void GEBase::OnBaseTickUpdate(double deltaTime)
 void GEBase::Delete()
 {
 	deleted = true;
+	UnSubscribeFromAll();
 }
 
 bool GEBase::IsDeleted()
@@ -86,6 +86,10 @@ void GEBase::SubscribeTo(GEBase* const obj)
 }
 void GEBase::UnSubscribeFrom(GEBase* const obj)
 {
+	if (obj == this)
+	{
+		return;
+	}
 	obj->subscribers.erase(this->nickName);
 	obj->OnSubscriberRemove(this);
 	subscriptions.erase(obj->nickName);
@@ -102,23 +106,22 @@ void GEBase::UnSubscribeFromAll()
 
 	subscriptions.clear();
 }
-
-void GEBase::UpdateSubscribersOfDeletion()
+//called direct from destructor, notifies all subscriptions of a hard delete!
+void GEBase::SendHardDeletionWarningToSubscriptions()
 {
-	//notify all subscribers of deletion
-	std::map<std::string, GEBase*>::iterator it = subscribers.begin();
-	while (it != subscribers.end())
+	std::map<std::string, GEBase*>::iterator it = subscriptions.begin();
+	while (it != subscriptions.end())
 	{
-		GEBase* subscriber = it->second;
+		GEBase* sub = it->second;
 		it++;
-		subscriber->UnSubscribeFrom(this);
-		subscriber->OnSubscriptionRemoved(this);
+		sub->OnHardDeletionWarningFromSubscriber(sub);
 	}
 }
+
 //Subscribers should not be able have multiple entries into a subscription.
 void GEBase::OnSubscriberAdd(GEBase* obj)
 {
-	
+
 }
 void GEBase::OnSubscriberRemove(GEBase* obj)
 {
@@ -127,6 +130,12 @@ void GEBase::OnSubscriberRemove(GEBase* obj)
 void GEBase::OnSubscriptionRemoved(GEBase* sub)
 {
 
+}
+void GEBase::OnHardDeletionWarningFromSubscriber(GEBase* obj)
+{
+	//obj is about to be hard deleted!
+	//default behalvior is to remove from our subscriber list:
+	obj->UnSubscribeFrom(this);
 }
 
 

@@ -116,8 +116,12 @@ void GEWorld::InitializeNewton()
 //Updates the Logic In the world, and updates subscribers
 void GEWorld::BaseTickUpdate(double deltaTime)
 {
+	//Let Newton Do The Multi-Threaded Simulation Update.
 	NewtonUpdateAsync(newtonWorld, deltaTime);
+	
+	//Blocking Main Thread Till Finished.
 	NewtonWaitForUpdateToFinish(newtonWorld);
+
 	if (KeyHit(GLFW_KEY_DELETE))
 	{
 		delete (GEEntity*)GEApp::GameEngine()->Console()->FindSubscriberByName("bob");
@@ -155,6 +159,7 @@ void GEWorld::OnSubscriberRemove(GEBase* obj)
 
 
 //Newton Dynamics Callbacks
+///////////////////////////////////////////////////////////////////////////////////////////////////
 void GENewton_ApplyForceAndTorqueCallback(const NewtonBody* body, dFloat timestep, int threadIndex)
 {
 	if (NewtonBodyGetUserData(body) == nullptr)
@@ -201,6 +206,7 @@ void GENewton_SetTransformCallback(const NewtonBody* body, const dFloat* matrix,
 	orientation = glm::quat_cast(NewtToGlm(newtMat));
 	ent->SetOrientation(orientation);
 }
+
 void GENewton_DestroyBodyCallback(const NewtonBody* body)
 {
 	//do nothing.

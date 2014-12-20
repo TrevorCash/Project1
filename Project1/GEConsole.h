@@ -3,8 +3,10 @@
 #include <list>
 #include <map>
 
-//The Console is the subscription to all GEBase derived objects. (ie all GEBase derived object subscribe to the console)
-//Keeps Track Of All Objects
+//The console serves as a subscription every GEBase Object Should Be Subscribed Too!
+//Any Object Subscribed To the Console is memory managed
+//The Console Is the Only Class That Is Allowed To Instantiate and Delete Game Engine Objects!
+
 class GEConsole : public GEBase
 {
 public:
@@ -18,6 +20,8 @@ public:
 
 	virtual void OnSubscriberAdd(GEBase* obj);
 	virtual void OnSubscriberRemove(GEBase* obj);
+
+	virtual void OnBaseTickUpdate(double deltaTime);
 
 private:
 

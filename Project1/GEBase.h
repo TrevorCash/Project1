@@ -45,8 +45,9 @@ public:
 	virtual void SubscribeTo(GEBase* const obj);
 	virtual void UnSubscribeFrom(GEBase* const obj);
 	virtual void UnSubscribeFromAll();
-	virtual void UpdateSubscribersOfDeletion();
-
+	virtual void SendHardDeletionWarningToSubscriptions();
+	virtual void OnHardDeletionWarningFromSubscriber(GEBase* obj);
+public:
 	virtual void OnSubscriberAdd(GEBase* obj);
 	virtual void OnSubscriberRemove(GEBase* obj);
 	virtual void OnSubscriptionRemoved(GEBase* sub);
@@ -63,21 +64,13 @@ public:
 	virtual void SetNickName(std::string name);
 	virtual std::string NickName();
 
-
-
 protected:
 
 
 private:
 
-
-
 	bool deleted;
 	std::string nickName;//user defined nick name for easy finds from the console object.
-
-
-	
-
 
 	unsigned int networkId;//id for use in networking - identical objects across network will have identical networkId's
 	bool isNetworked;

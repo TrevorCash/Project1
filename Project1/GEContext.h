@@ -5,7 +5,7 @@
 
 #include <vector>
 
-class GEContext
+class GEContext : public GEBase
 {
 public:
 	GEContext(void);

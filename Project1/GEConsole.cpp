@@ -11,6 +11,33 @@ GEConsole::~GEConsole()
 {
 }
 
+
+//Base tick 
+void GEConsole::OnBaseTickUpdate(double deltaTime)
+{
+	GEBase::OnBaseTickUpdate(deltaTime);
+
+
+	//Garbage Collect Subscriptions!
+	std::map<std::string, GEBase*>::iterator it = subscribers.begin();
+	while (it != subscribers.end())
+	{
+		GEBase* obj = it->second;
+		if (obj->IsDeleted())
+		{
+			delete obj;
+		}
+	}
+}
+
+
+
+
+
+
+
+
+
 //subscriptions overrides
 void GEConsole::SubscribeTo(GEBase* const obj)
 {
@@ -29,6 +56,8 @@ void GEConsole::OnSubscriberRemove(GEBase* obj)
 {
 	GEBase::OnSubscriberRemove(obj);
 }
+
+
 
 
 

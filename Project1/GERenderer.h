@@ -18,7 +18,7 @@ class GERenderer : public GEBase
 {
 public:
 	GERenderer(GEContext* pContext);
-	~GERenderer(void);
+	virtual ~GERenderer(void);
 	
 	void Render(GEClient* client, GEWorld* world, float interpolation);
 	

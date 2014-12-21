@@ -11,7 +11,7 @@ class GEConsole : public GEBase
 {
 public:
 	GEConsole();
-	~GEConsole();
+	virtual ~GEConsole();
 
 
 	//subscription system
@@ -23,7 +23,10 @@ public:
 
 	virtual void OnBaseTickUpdate(double deltaTime);
 
+	
+
 private:
+	void GarbageCollectAll();
 
 };
 

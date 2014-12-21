@@ -6,7 +6,7 @@ class GEClient :
 {
 public:
 	GEClient();
-	~GEClient();
+	virtual ~GEClient();
 
 	void SetCamera(GEEntityCamera* cam);
 	GEEntityCamera* GetCamera();

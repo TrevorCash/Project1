@@ -45,6 +45,9 @@ public:
 	virtual void SubscribeTo(GEBase* const obj);
 	virtual void UnSubscribeFrom(GEBase* const obj);
 	virtual void UnSubscribeFromAll();
+	virtual void DetachSubscribers();
+
+
 	virtual void SendHardDeletionWarningToSubscriptions();
 	virtual void OnHardDeletionWarningFromSubscriber(GEBase* obj);
 public:

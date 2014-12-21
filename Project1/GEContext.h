@@ -9,7 +9,7 @@ class GEContext : public GEBase
 {
 public:
 	GEContext(void);
-	~GEContext(void);
+	virtual ~GEContext(void);
 
 	glm::vec2 GetResolution();
 	GLFWwindow* GetWindow();

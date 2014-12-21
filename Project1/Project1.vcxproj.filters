@@ -40,6 +40,9 @@
     <Filter Include="Header Files\Geometry">
       <UniqueIdentifier>{64723eb6-ace8-47d6-845b-6eca0563e1dc}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Other">
+      <UniqueIdentifier>{e1865a90-8352-462c-8055-7a58bbfbeb92}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="GEBase.h">
@@ -192,5 +195,10 @@
   <ItemGroup>
     <None Include="vertShader.shad" />
     <None Include="fragShader.shad" />
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="RoadMap.txt">
+      <Filter>Other</Filter>
+    </Text>
   </ItemGroup>
 </Project>

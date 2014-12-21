@@ -194,6 +194,9 @@
     <None Include="fragShader.shad" />
     <None Include="vertShader.shad" />
   </ItemGroup>
+  <ItemGroup>
+    <Text Include="RoadMap.txt" />
+  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>

@@ -15,7 +15,7 @@ class GEModelData :
 {
 public:
 	GEModelData(void);
-	~GEModelData(void);
+	virtual ~GEModelData(void);
 	
 	void BindGraphics();//generates graphics buffers for use in rendering.
 	void UnBindGraphics();//releases associated bound graphcis buffers.

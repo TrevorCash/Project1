@@ -40,8 +40,6 @@ GEEntity::~GEEntity(void)
 		child->SetParent(nullptr);
 		
 	}
-
-	UnSubscribeFrom((GEBase*)GEApp::GameEngine()->GetWorld());
 }
 
 GECLASSTYPE GEEntity::ClassType()

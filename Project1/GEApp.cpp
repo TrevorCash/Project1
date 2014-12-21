@@ -50,15 +50,16 @@ GEApp::~GEApp(void)
 {
 
 	//this order DOES matter.
-	delete pRenderer;
-	NewtonWorld* pNewt = pWorld->newtonWorld;
-	delete pWorld;
-	delete pContext;
-	delete pClient;
+	//delete pRenderer;
+	//NewtonWorld* pNewt = pWorld->newtonWorld;
+	//delete pWorld;
+	//delete pContext;
+	//delete pClient;
+	
 	
 	delete pConsole;
 
-	NewtonDestroy(pNewt);
+	//NewtonDestroy(pNewt);
 }
 
 void GEApp::Initialize()
@@ -116,6 +117,7 @@ void GEApp::Run(void)
 			pContext->UpdateMouse();
 			pNetStatus->Update();
 			pWorld->BaseTickUpdate(TickTime);
+			pConsole->OnBaseTickUpdate(TickTime);
 			postTickTime = glfwGetTime();
 			timeAccumulator -= TickTime;
 			if ((postTickTime - preTickTime) > TickTime) break;

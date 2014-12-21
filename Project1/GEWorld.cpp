@@ -26,6 +26,7 @@ GEWorld::GEWorld(void) : GEBase()
 
 GEWorld::~GEWorld(void)
 {
+	NewtonDestroy(newtonWorld);
 }
 
 void GEWorld::Initialize()
@@ -54,7 +55,6 @@ void GEWorld::Initialize()
 	floor->SetNickName("mainfloor");
 
 
-
 	GEEntityRigidBody* rigid1 = new GEEntityRigidBody();
 	
 
@@ -64,27 +64,23 @@ void GEWorld::Initialize()
 	GEEntityRenderable* b = new GEEntityRenderable();
 	b->modelData = GEApp::GameEngine()->GetRenderer()->ModelData()[0];
 
-	b->SetParent(a);
-
 	GEEntityRenderable* c = new GEEntityRenderable();
 	c->modelData = GEApp::GameEngine()->GetRenderer()->ModelData()[0];
 
-	c->SetParent(a);
 
 	b->MoveBy(glm::vec3(5, 0, 0));
 	c->MoveBy(glm::vec3(5, 5, 0));
 	rigid1->SetNickName("bob");
 	a->SetParent(rigid1);
-
-
-
+	b->SetParent(rigid1);
+	c->SetParent(rigid1);
 
 
 
 	GEEntityRigidBody* prevBody = nullptr;
-	for (int j = 0; j < 500; j++)
+	for (int j = 0; j < 5; j++)
 	{
-		for (int i = 0; i < 10; i++)
+		for (int i = 0; i < 2; i++)
 		{
 			////do some testing with physics parenting!
 			GEEntityRigidBody* BodyA = new GEEntityRigidBody();
@@ -124,11 +120,11 @@ void GEWorld::BaseTickUpdate(double deltaTime)
 
 	if (KeyHit(GLFW_KEY_DELETE))
 	{
-		delete (GEEntity*)GEApp::GameEngine()->Console()->FindSubscriberByName("bob");
+		GEApp::GameEngine()->Console()->FindSubscriberByName("bob")->Delete();
 	}
 	if (KeyHit(GLFW_KEY_P))
 	{
-		
+		delete (GEEntity*)GEApp::GameEngine()->Console()->FindSubscriberByName("bob");
 	}
 
 	for (std::map<std::string, GEBase*>::iterator it = subscribers.begin(); it != subscribers.end(); it++)

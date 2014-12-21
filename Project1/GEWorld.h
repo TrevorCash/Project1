@@ -14,7 +14,7 @@ class GEWorld : public GEBase
 {
 public:
 	GEWorld(void);
-	~GEWorld(void);
+	virtual ~GEWorld(void);
 
 	void Initialize();
 	void InitializeNewton();

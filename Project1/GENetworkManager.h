@@ -15,7 +15,7 @@ class GENetworkManager : public GEBase
 {
 public:
 	GENetworkManager();
-	~GENetworkManager();
+	virtual ~GENetworkManager();
 
 	bool IsServer();
 

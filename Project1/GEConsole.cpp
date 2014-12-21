@@ -9,6 +9,12 @@ GEConsole::GEConsole() : GEBase()
 
 GEConsole::~GEConsole()
 {
+	for (auto it = subscribers.begin(); it != subscribers.end();)
+	{
+		it->second->Delete();
+		it++;
+	}
+	GarbageCollectAll();
 }
 
 
@@ -17,15 +23,27 @@ void GEConsole::OnBaseTickUpdate(double deltaTime)
 {
 	GEBase::OnBaseTickUpdate(deltaTime);
 
+	GarbageCollectAll();
+}
 
+
+//Does Imediate Garbage Collection
+void GEConsole::GarbageCollectAll()
+{
 	//Garbage Collect Subscriptions!
-	std::map<std::string, GEBase*>::iterator it = subscribers.begin();
-	while (it != subscribers.end())
+	for (auto it = subscribers.cbegin(); it != subscribers.cend() /* not hoisted */; /* no increment */)
 	{
 		GEBase* obj = it->second;
 		if (obj->IsDeleted())
 		{
+			obj->subscriptions.erase(this->NickName());
+			subscribers.erase(it++);
 			delete obj;
+			
+		}
+		else
+		{
+			++it;
 		}
 	}
 }

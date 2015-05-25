@@ -120,7 +120,7 @@ void GEWorld::BaseTickUpdate(double deltaTime)
 
 	if (KeyHit(GLFW_KEY_DELETE))
 	{
-		GEApp::GameEngine()->Console()->FindSubscriberByName("bob")->Delete();
+		GEApp::GameEngine()->Console()->FindSubscriberByName("bob")->UnSubscribeFromAll();
 	}
 	if (KeyHit(GLFW_KEY_P))
 	{

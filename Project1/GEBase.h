@@ -8,7 +8,12 @@
 
 enum GECLASSTYPE
 {
-	Base = 1, Entity, EntityRenderable, EntityRigidBody, MeshData, ModelData
+	Base = 1, 
+	Entity, 
+	EntityRenderable, 
+	EntityRigidBody, 
+	MeshData,
+	ModelData
 };
 
 
@@ -36,10 +41,6 @@ public:
 	virtual void UnpackNetworkUpdate(std::stringstream &dataStream);
 
 
-	virtual void Delete();//marks the object for deletion next time the console tries to update it.
-	bool IsDeleted();//if the object is marked for deletion.
-	bool IsObject();//is it a valid object (not deleted)
-
 	//subscription system
 	//////////////////////
 	virtual void SubscribeTo(GEBase* const obj);
@@ -47,9 +48,9 @@ public:
 	virtual void UnSubscribeFromAll();
 	virtual void DetachSubscribers();
 
+	unsigned int NumSubscriptions();
 
-	virtual void SendHardDeletionWarningToSubscriptions();
-	virtual void OnHardDeletionWarningFromSubscriber(GEBase* obj);
+
 public:
 	virtual void OnSubscriberAdd(GEBase* obj);
 	virtual void OnSubscriberRemove(GEBase* obj);

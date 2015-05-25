@@ -31,7 +31,6 @@ GEBase::GEBase(void)
 
 GEBase::~GEBase(void)
 {
-	SendHardDeletionWarningToSubscriptions();
 }
 
 
@@ -65,32 +64,16 @@ void GEBase::OnBaseTickUpdate(double deltaTime)
 }
 
 
-//marks the object as ready to be freed - the console frees the object when garbage collection
-//occurs
-void GEBase::Delete()
-{
-	deleted = true;
-	UnSubscribeFromAll();
-	DetachSubscribers();
-}
-
-bool GEBase::IsDeleted()
-{
-	return deleted;
-}
-bool GEBase::IsObject()
-{
-	return !deleted;
-}
 
 //subscription system
 void GEBase::SubscribeTo(GEBase* const obj)
 {
+	//Dont allow subscribing to yourself..
 	if (obj == this)
 		return;
 
-	//Dont subscribe to the Console twice!
-	if (obj == (GEBase*)GEApp::GameEngine()->GetConsole())
+	//Dont allow double subscriptions
+	if (IsSubscribedTo(obj->nickName))
 		return;
 	
 	obj->subscribers.insert(std::pair<std::string,GEBase*>(this->nickName, this));
@@ -100,9 +83,6 @@ void GEBase::SubscribeTo(GEBase* const obj)
 void GEBase::UnSubscribeFrom(GEBase* const obj)
 {
 	if (obj == this)
-		return;
-
-	if (obj == (GEBase*)GEApp::GameEngine()->GetConsole())
 		return;
 
 	obj->subscribers.erase(this->nickName);
@@ -130,29 +110,18 @@ void GEBase::UnSubscribeFromAll()
 //all objects currently subscribed to this are un-subscribed
 void GEBase::DetachSubscribers()
 {
-	if (this == (GEBase*)GEApp::GameEngine()->GetConsole())
-		return;
-
-	///TODO SOMETHINGS WRONG HERE>>>>>>
-	std::map<std::string, GEBase*>::iterator it = subscribers.begin();
-	for (; it != subscribers.end(); it++)
+	///TODO SOMETHINGS WRONG HERE ??>>>>>>
+	for (auto it = subscribers.begin(); it != subscribers.end(); it++)
 	{
 		it->second->UnSubscribeFrom(this);
 	}
 }
 
-
-//called direct from destructor, notifies all subscriptions of a hard delete!
-void GEBase::SendHardDeletionWarningToSubscriptions()
+unsigned int GEBase::NumSubscriptions()
 {
-	std::map<std::string, GEBase*>::iterator it = subscriptions.begin();
-	while (it != subscriptions.end())
-	{
-		GEBase* sub = it->second;
-		it++;
-		sub->OnHardDeletionWarningFromSubscriber(sub);
-	}
+	return subscriptions.size();
 }
+
 
 //Subscribers should not be able have multiple entries into a subscription.
 void GEBase::OnSubscriberAdd(GEBase* obj)
@@ -167,21 +136,6 @@ void GEBase::OnSubscriptionRemoved(GEBase* sub)
 {
 
 }
-void GEBase::OnHardDeletionWarningFromSubscriber(GEBase* obj)
-{
-	//obj is about to be hard deleted!
-	//default behalvior is to To warn
-
-	//If this is the console this will happen all the time because the console
-	//is the garbage collector
-	//ignore if this is the case..
-	if (this != (GEBase*)GEApp::GameEngine()->GetConsole())
-	{
-		std::cout << "SUBSCRIPTION WARNING FROM: " << this->NickName() << std::endl;
-		std::cout << "		Unsupervised Delete of " << obj->NickName();
-	}
-}
-
 
 
 bool GEBase::IsSubscribedTo(std::string nickName)

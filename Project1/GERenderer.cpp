@@ -130,14 +130,14 @@ void GERenderer::FreeRenderingAssets()
 {
 	for (int i = 0; i < (int)shaderProgramList.size(); i++)
 	{
-		shaderProgramList[i]->Delete();
+		shaderProgramList[i]->UnSubscribeFrom(this);
 	}
 	shaderProgramList.clear();
 
 
 	for (int i = 0; i < (int)shaderList.size(); i++)
 	{
-		shaderList[i]->Delete();
+		shaderList[i]->UnSubscribeFrom(this);
 	}
 	shaderList.clear();
 }

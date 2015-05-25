@@ -17,7 +17,7 @@
 #include <iostream>
 #include <vector>
 
-GEWorld::GEWorld(void) : GEBase()
+GEWorld::GEWorld(void)
 {
 	gravity = -9.81;
 	InitializeNewton();
@@ -34,69 +34,67 @@ void GEWorld::Initialize()
 	////make the scene.
 
 	//make cordinate legend at origin
-	GEEntityRenderable* legend = new GEEntityRenderable();
-	legend->modelData = GEApp::globalGameEngineInstance->Renderer()->ModelData()[2];
-	legend->SetColor(glm::linearRand(glm::vec4(0.0f), glm::vec4(1.0f)));
+	//GEEntityRenderable* legend = new GEEntityRenderable();
+	//legend->modelData = GEApp::globalGameEngineInstance->Renderer()->ModelData()[2];
+	//legend->SetColor(glm::linearRand(glm::vec4(0.0f), glm::vec4(1.0f)));
 
 	//make camera
-	GEEntityCamera* camera = new GEEntityCamera();
-	GEApp::Client()->SetCamera(camera);
-	camera->SetPosition(glm::vec3(0, 10, 30));
-	camera->SetNickName("cam");
+	GEEntityCamera* cam = new GEEntityCamera();
+	GEApp::Client()->SetCamera(cam);
+	cam->SetPosition(glm::vec3(0, 10, 30));
 
 	//make a floor
-	GEEntityRigidBody* floor = new GEEntityRigidBody();
-	GEEntityRenderable* floorVis = new GEEntityRenderable();
-	floorVis->modelData = GEApp::globalGameEngineInstance->Renderer()->ModelData()[1];
-	floorVis->SetParent(floor);
-	floor->SetPosition(glm::vec3(0, -101.0, 0));
-	floor->SetScale(glm::vec3(200, 200, 200));
-	floor->SetFrozen(true);
-	floor->SetNickName("mainfloor");
+	//GEEntityRigidBody* floor = new GEEntityRigidBody();
+	//GEEntityRenderable* floorVis = new GEEntityRenderable();
+	//floorVis->modelData = GEApp::globalGameEngineInstance->Renderer()->ModelData()[1];
+	//floorVis->SetParent(floor);
+	//floor->SetPosition(glm::vec3(0, -101.0, 0));
+	//floor->SetScale(glm::vec3(200, 200, 200));
+	//floor->SetFrozen(true);
+	//floor->SetNickName("mainfloor");
 
 
 	GEEntityRigidBody* rigid1 = new GEEntityRigidBody();
+
+	//GEEntityRenderable* a = new GEEntityRenderable();
+	//a->modelData = GEApp::GameEngine()->GetRenderer()->ModelData()[0];
+
+	//GEEntityRenderable* b = new GEEntityRenderable();
+	//b->modelData = GEApp::GameEngine()->GetRenderer()->ModelData()[0];
+
+	//GEEntityRenderable* c = new GEEntityRenderable();
+	//c->modelData = GEApp::GameEngine()->GetRenderer()->ModelData()[0];
+
+
+	//b->MoveBy(glm::vec3(5, 0, 0));
+	//c->MoveBy(glm::vec3(5, 5, 0));
 	
-
-	GEEntityRenderable* a = new GEEntityRenderable();
-	a->modelData = GEApp::GameEngine()->GetRenderer()->ModelData()[0];
-
-	GEEntityRenderable* b = new GEEntityRenderable();
-	b->modelData = GEApp::GameEngine()->GetRenderer()->ModelData()[0];
-
-	GEEntityRenderable* c = new GEEntityRenderable();
-	c->modelData = GEApp::GameEngine()->GetRenderer()->ModelData()[0];
-
-
-	b->MoveBy(glm::vec3(5, 0, 0));
-	c->MoveBy(glm::vec3(5, 5, 0));
-	rigid1->SetNickName("bob");
-	a->SetParent(rigid1);
-	b->SetParent(rigid1);
-	c->SetParent(rigid1);
+	//a->SetParent(rigid1);
+	//b->SetParent(rigid1);
+	//c->SetParent(rigid1);
 
 
 
-	GEEntityRigidBody* prevBody = nullptr;
-	for (int j = 0; j < 5; j++)
-	{
-		for (int i = 0; i < 2; i++)
-		{
-			////do some testing with physics parenting!
-			GEEntityRigidBody* BodyA = new GEEntityRigidBody();
-			BodyA->SetPosition(glm::ballRand(2.2f) + glm::vec3(0, 5*j, 0));
-			BodyA->SetRotation(45, glm::vec3(1, 0, 0));
+	//GEEntityRigidBody* prevBody = nullptr;
+	//for (int j = 0; j < 5; j++)
+	//{
+	//	for (int i = 0; i < 2; i++)
+	//	{
+	//		////do some testing with physics parenting!
+	//		GEEntityRigidBody* BodyA = new GEEntityRigidBody();
+	//		BodyA->SetPosition(glm::ballRand(2.2f) + glm::vec3(0, 5*j, 0));
+	//		BodyA->SetRotation(45, glm::vec3(1, 0, 0));
 
-			GEEntityRenderable* VisBodyA = new GEEntityRenderable();
-			VisBodyA->modelData = GEApp::GameEngine()->Renderer()->ModelData()[0];
-			VisBodyA->SetParent(BodyA, false);
-			VisBodyA->SetColor(glm::linearRand(glm::vec4(1), glm::vec4(0)));
-			if (prevBody)
-				BodyA->SetParent(prevBody);
-			prevBody = BodyA;
-		}
-		prevBody = nullptr;
-	}
+	//		GEEntityRenderable* VisBodyA = new GEEntityRenderable();
+	//		VisBodyA->modelData = GEApp::GameEngine()->Renderer()->ModelData()[0];
+	//		VisBodyA->SetParent(BodyA, false);
+	//		VisBodyA->SetColor(glm::linearRand(glm::vec4(1), glm::vec4(0)));
+	//		if (prevBody)
+	//			BodyA->SetParent(prevBody);
+	//		prevBody = BodyA;
+	//	}
+	//	prevBody = nullptr;
+	//}
 }
 
 void GEWorld::InitializeNewton()
@@ -120,36 +118,20 @@ void GEWorld::BaseTickUpdate(double deltaTime)
 
 	if (KeyHit(GLFW_KEY_DELETE))
 	{
-		GEApp::GameEngine()->Console()->FindSubscriberByName("bob")->Delete();
+	//	GEApp::GameEngine()->Console()->FindObjectByName("bob")->Free();
 	}
 	if (KeyHit(GLFW_KEY_P))
 	{
-		delete (GEEntity*)GEApp::GameEngine()->Console()->FindSubscriberByName("bob");
+	//	delete (GEEntity*)GEApp::GameEngine()->Console()->FindObjectByName("bob");
 	}
 
-	for (std::map<std::string, GEBase*>::iterator it = subscribers.begin(); it != subscribers.end(); it++)
+	for (auto it = entityMap.begin(); it != entityMap.end(); it++)
 	{
-		GEBase* obj = it->second;
-		obj->OnBaseTickUpdate(deltaTime);
+		GEEntity* obj = it->second;
+		((GEBase*)obj)->OnBaseTickUpdate(deltaTime);
 	}
 	
 }
-
-
-//subscription behalvior
-void GEWorld::OnSubscriberAdd(GEBase* obj)
-{
-	GEBase::OnSubscriberAdd(obj);
-	//TODO Throw Exception if not based on GEEntity
-}
-
-
-void GEWorld::OnSubscriberRemove(GEBase* obj)
-{
-	GEBase::OnSubscriberRemove(obj);
-
-}
-
 
 
 
@@ -171,7 +153,7 @@ void GENewton_ApplyForceAndTorqueCallback(const NewtonBody* body, dFloat timeste
 
 	//dVector gravityForce(0.0f, mass * GEApp::GameEngine()->GetWorld()->gravity, 0.0f, 1.0f);
 
-	GEEntity* cam = (GEEntity*) GEApp::GameEngine()->Console()->FindSubscriberByName("cam");
+	GEEntity* cam = (GEEntity*) GEApp::GameEngine()->Client()->GetCamera();
 	glm::vec3 disp = ((GEEntity*)NewtonBodyGetUserData(body))->GetPosition() - cam->GetPosition() - cam->GetForward()*50.0f;
 	disp *= -5.0;
 

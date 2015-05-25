@@ -1,3 +1,4 @@
+#include "GEApp.h"
 #include "GEShaderProgram.h"
 #include "LowLevelGraphics.h"
 #include <iostream>
@@ -5,6 +6,7 @@
 GEShaderProgram::GEShaderProgram(void) : GEBase()
 {
 	programID = glCreateProgram();
+
 }
 
 

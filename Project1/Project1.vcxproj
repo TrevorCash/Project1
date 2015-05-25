@@ -140,7 +140,6 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="EasyInput.h" />
-    <ClInclude Include="GEAABB.h" />
     <ClInclude Include="GEApp.h" />
     <ClInclude Include="GEBase.h" />
     <ClInclude Include="GEClient.h" />
@@ -155,10 +154,8 @@
     <ClInclude Include="GEModelData.h" />
     <ClInclude Include="GEModelLoader.h" />
     <ClInclude Include="GENetworkManager.h" />
-    <ClInclude Include="GEOctNode.h" />
     <ClInclude Include="GEPhysicsHeaders.h" />
     <ClInclude Include="GERenderer.h" />
-    <ClInclude Include="GESceneGraph.h" />
     <ClInclude Include="GEShader.h" />
     <ClInclude Include="GEShaderProgram.h" />
     <ClInclude Include="GETriangle.h" />
@@ -167,7 +164,6 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="EasyInput.cpp" />
-    <ClCompile Include="GEAABB.cpp" />
     <ClCompile Include="GEApp.cpp" />
     <ClCompile Include="GEBase.cpp" />
     <ClCompile Include="GEClient.cpp" />
@@ -182,9 +178,7 @@
     <ClCompile Include="GEModelData.cpp" />
     <ClCompile Include="GEModelLoader.cpp" />
     <ClCompile Include="GENetworkManager.cpp" />
-    <ClCompile Include="GEOctNode.cpp" />
     <ClCompile Include="GERenderer.cpp" />
-    <ClCompile Include="GESceneGraph.cpp" />
     <ClCompile Include="GEShader.cpp" />
     <ClCompile Include="GEShaderProgram.cpp" />
     <ClCompile Include="GEWorld.cpp" />

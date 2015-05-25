@@ -50,16 +50,13 @@ GEApp::~GEApp(void)
 {
 
 	//this order DOES matter.
-	//delete pRenderer;
-	//NewtonWorld* pNewt = pWorld->newtonWorld;
-	//delete pWorld;
-	//delete pContext;
-	//delete pClient;
-	
+	delete pRenderer;
+	delete pWorld;
+	delete pContext;
+	delete pClient;
 	
 	delete pConsole;
 
-	//NewtonDestroy(pNewt);
 }
 
 void GEApp::Initialize()
@@ -81,6 +78,9 @@ void GEApp::Initialize()
 		//ask user for server address to connect to..
 		pNetStatus->ConnectToHost("localhost");
 	}
+
+	pRenderer->LoadRenderingAssets();
+	pRenderer->Initialize();
 
 	pWorld->Initialize();
 	pContext->HideMouse();

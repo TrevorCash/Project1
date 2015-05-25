@@ -1,7 +1,7 @@
 #include "GEMeshData.h"
 
 
-GEMeshData::GEMeshData() : GEBase()
+GEMeshData::GEMeshData()
 {
 	vertices = nullptr;
 	numVertices = 0;

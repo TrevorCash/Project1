@@ -38,7 +38,6 @@ GEEntity::~GEEntity(void)
 		std::cout << child;
 		it++;
 		child->SetParent(nullptr);
-		
 	}
 }
 
@@ -295,31 +294,10 @@ glm::mat4 GEEntity::GetInterpolatedTransform(const float interpolation, bool glo
 				return  CurInterpTransform;
 			}
 
-				
-		
-		
+			
 		}
 		else
 			return interpolatedTransform;
 	}
 }
 
-
-//bounds
-//for more "physical entities, extend this method to update AABB box if geometry changes.
-void GEEntity::RecalculateLocalAABB()
-{
-	GEEntity::OnRecalculateLocalAABB();
-}
-void GEEntity::OnRecalculateLocalAABB()
-{
-	//TODO notify scene graph????
-}
-GEAABB GEEntity::GetLocalAABB()
-{
-	return localBoundingBox;
-}
-GEAABB GEEntity::GetGlobalAABB()
-{
-	return localBoundingBox + GetPosition(true);
-}

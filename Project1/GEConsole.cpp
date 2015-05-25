@@ -2,87 +2,45 @@
 #include <iostream>
 #include <iterator>
 
-GEConsole::GEConsole() : GEBase()
+GEConsole::GEConsole()
 {
 }
 
 
 GEConsole::~GEConsole()
 {
-	for (auto it = subscribers.begin(); it != subscribers.end();)
+}
+
+
+void GEConsole::GarbageCollect()
+{
+	for (auto obj = objectMap.begin(); obj != objectMap.end(); obj++)
 	{
-		it->second->Delete();
-		it++;
+		if (((GEBase*)obj->second)->isFreed())
+			delete obj->second;
+
+		objectMap.erase(obj);
 	}
-	GarbageCollectAll();
+
 }
 
 
-//Base tick 
-void GEConsole::OnBaseTickUpdate(double deltaTime)
+//deletes all objects owed by this console.
+void GEConsole::DeleteAll()
 {
-	GEBase::OnBaseTickUpdate(deltaTime);
-
-	GarbageCollectAll();
-}
-
-
-//Does Imediate Garbage Collection
-void GEConsole::GarbageCollectAll()
-{
-	//Garbage Collect Subscriptions!
-	for (auto it = subscribers.cbegin(); it != subscribers.cend() /* not hoisted */; /* no increment */)
+	for (auto obj = objectMap.begin(); obj != objectMap.end(); obj++)
 	{
-		GEBase* obj = it->second;
-		if (obj->IsDeleted())
-		{
-			obj->subscriptions.erase(this->NickName());
-			subscribers.erase(it++);
-			delete obj;
-			
-		}
-		else
-		{
-			++it;
-		}
+		delete obj->second;
 	}
+
+	objectMap.clear();
 }
 
 
-
-
-
-
-
-
-
-//subscriptions overrides
-void GEConsole::SubscribeTo(GEBase* const obj)
+void GEConsole::AddObject(GEBase* obj)
 {
-	GEBase::SubscribeTo(obj);
+	objectMap.insert(std::pair<unsigned int, GEBase*>(obj->UniqueId(), obj));
 }
-void GEConsole::UnSubscribeFrom(GEBase* const obj)
-{
-	GEBase::UnSubscribeFrom(obj);
-}
-
-void GEConsole::OnSubscriberAdd(GEBase* obj)
-{
-	GEBase::OnSubscriberAdd(obj);
-}
-void GEConsole::OnSubscriberRemove(GEBase* obj)
-{
-	GEBase::OnSubscriberRemove(obj);
-}
-
-
-
-
-
-
-
-
-
 
 
 

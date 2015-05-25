@@ -11,7 +11,7 @@
 
 
 
-class GENetworkManager : public GEBase
+class GENetworkManager
 {
 public:
 	GENetworkManager();

@@ -8,6 +8,7 @@ GEEntityCamera::GEEntityCamera() : GEEntity()
 {
 	yaw = 0;
 	pitch = 0;
+	SubscribeTo((GEBase*)GEApp::GameEngine()->GetRenderer());
 }
 
 

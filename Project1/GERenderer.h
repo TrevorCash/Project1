@@ -14,26 +14,27 @@ class GEShader;
 class GEShaderProgram;
 class GEEntityRenderable;
 
-class GERenderer : public GEBase
+class GERenderer
 {
 public:
 	GERenderer(GEContext* pContext);
 	virtual ~GERenderer(void);
 	
+	void LoadRenderingAssets();
+	void FreeRenderingAssets();
+	void Initialize();
 	void Render(GEClient* client, GEWorld* world, float interpolation);
 	
 	std::vector<GEModelData*>& ModelData();
 
 private:
-	void LoadRenderingAssets();
-	void FreeRenderingAssets();
-	void Initialize();
+
 
 	GEContext* context;
 
 	std::vector<GEShaderProgram*> shaderProgramList;
 	std::vector<GEShader*> shaderList;
-
+	std::vector<GEEntityRenderable*> entityList;
 
 	GEModelLoader modelLoader;
 	std::vector<GEModelData*> modelDataList;

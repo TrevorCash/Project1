@@ -14,6 +14,8 @@ public:
 
 	virtual GECLASSTYPE ClassType();
 
+	//delete extended
+	virtual void Delete();
 
 	//base tick extended
 	virtual void OnBaseTickUpdate(double deltaTime);

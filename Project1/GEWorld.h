@@ -10,7 +10,7 @@
 #define WORLDTICKMUL 60.0
 
 
-class GEWorld
+class GEWorld : public GEBase
 {
 public:
 	GEWorld(void);
@@ -20,12 +20,15 @@ public:
 	void InitializeNewton();
 	virtual void BaseTickUpdate(double deltaTime);
 
+	//subscription behalvior
+	virtual void OnSubscriberAdd(GEBase* obj);
+	virtual void OnSubscriberRemove(GEBase* obj);
+
 
 	double gravity;
 	NewtonWorld* newtonWorld;
 
 private:
-	std::map<std::string, GEEntity*> entityMap;
 
 };
 

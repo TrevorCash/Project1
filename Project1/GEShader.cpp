@@ -1,4 +1,3 @@
-#include "GEApp.h"
 #include "GEShader.h"
 #include <string>
 #include <iostream>
@@ -29,7 +28,6 @@ GEShader::GEShader(GLenum shaderType, std::string filepath) : GEBase()
 		std::cout << sourceCode << std::endl;
 	}
 	std::cout << "shader " << shaderID << " created" << std::endl;
-
 }
 
 

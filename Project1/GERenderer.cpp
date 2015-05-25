@@ -15,9 +15,13 @@
 #include "glm\ext.hpp"
 #include "GLFW\glfw3.h"
 
-GERenderer::GERenderer(GEContext* pContext)
+GERenderer::GERenderer(GEContext* pContext) : GEBase()
 {
 	context = pContext;
+	LoadRenderingAssets();
+	Initialize();
+
+	UnSubscribeFrom((GEBase*)GEApp::Console());
 }
 
 
@@ -56,10 +60,10 @@ void GERenderer::Render(GEClient* client, GEWorld* world, float interpolation)
 	//glUniformMatrix4fv(NormalToCamera_Loc, 1, GL_FALSE, glm::value_ptr(NormalMatrix));
 
 
-	for (auto it = entityList.begin(); it != entityList.end(); it++)
+	for (std::map<std::string, GEBase*>::iterator it = subscribers.begin(); it != subscribers.end(); it++)
 	{		
 
-		GEEntityRenderable* ent = (GEEntityRenderable*)*it;
+		GEEntityRenderable* ent = (GEEntityRenderable*)it->second;
 
 		glm::mat4 localToWorld = ent->GetInterpolatedTransform(interpolation, true, timeOfRender);
 
@@ -126,22 +130,16 @@ void GERenderer::FreeRenderingAssets()
 {
 	for (int i = 0; i < (int)shaderProgramList.size(); i++)
 	{
-		shaderProgramList[i]->Free();
+		shaderProgramList[i]->Delete();
 	}
 	shaderProgramList.clear();
 
 
 	for (int i = 0; i < (int)shaderList.size(); i++)
 	{
-		shaderList[i]->Free();
+		shaderList[i]->Delete();
 	}
 	shaderList.clear();
-
-	for (int i = 0; i < (int)modelDataList.size(); i++)
-	{
-		modelDataList[i]->Free();
-	}
-	modelDataList.clear();
 }
 
 void GERenderer::Initialize()

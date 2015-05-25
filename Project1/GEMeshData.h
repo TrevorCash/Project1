@@ -1,7 +1,8 @@
 #pragma once
 #include "GEBase.h"
 #include "LowLevelGraphics.h"
-class GEMeshData
+class GEMeshData :
+	public GEBase
 {
 public:
 	GEMeshData();

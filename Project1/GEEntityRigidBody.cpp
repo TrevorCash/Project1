@@ -54,6 +54,22 @@ GECLASSTYPE GEEntityRigidBody::ClassType()
 	return GECLASSTYPE::EntityRigidBody;
 }
 
+void GEEntityRigidBody::Delete()
+{
+	GEEntity::Delete();
+	
+	if (PhysBody)
+	{
+		NewtonBodySetUserData(PhysBody, nullptr);
+		NewtonDestroyBody(PhysBody);
+		PhysBody = nullptr;
+	}
+	if (PhysCol)
+	{
+		NewtonDestroyCollision(PhysCol);
+		PhysCol = nullptr;
+	}
+}
 
 //base tick extended
 void GEEntityRigidBody::OnBaseTickUpdate(double deltaTime)

@@ -8,7 +8,7 @@
 #include <string>
 
 
-GEModelLoader::GEModelLoader()
+GEModelLoader::GEModelLoader() : GEBase()
 {
 }
 

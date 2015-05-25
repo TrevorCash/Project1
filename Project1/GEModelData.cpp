@@ -1,5 +1,4 @@
 #include "GEModelData.h"
-#include "GEApp.h"
 
 
 GEModelData::GEModelData(void) : GEBase()

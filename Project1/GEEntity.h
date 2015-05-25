@@ -3,6 +3,7 @@
 #include <map>
 
 #include "gebase.h"
+#include "GEAABB.h"
 #include "glm\glm.hpp"
 #include "glm\gtc\quaternion.hpp"
 
@@ -50,6 +51,11 @@ public:
 	virtual glm::mat4 GetTransform(GEEntity* referenceEntity);
 	virtual glm::mat4 GetInterpolatedTransform(const float interpolation, bool global, double bakeUniqueTag);
 
+	//bounds
+	virtual void RecalculateLocalAABB();
+	virtual void OnRecalculateLocalAABB();
+	virtual GEAABB GetLocalAABB();
+	virtual GEAABB GetGlobalAABB();
 
 protected:
 
@@ -67,6 +73,9 @@ protected:
 	GEEntity* parent;//physical parent
 	//std::list<GEEntity*> children;//physical children.
 
+	//axis aligned bounds of the the entity
+	GEAABB localBoundingBox;
+	
 	typedef std::map<std::string, GEEntity*> children_map;
 	typedef children_map::iterator children_it;
 	children_map children;

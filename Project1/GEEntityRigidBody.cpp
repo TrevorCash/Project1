@@ -7,6 +7,7 @@
 
 GEEntityRigidBody::GEEntityRigidBody() : GEEntity()
 {
+	classType = GECLASS_EntityRigidBody;
 	//when we create a GEEntityRigidBody we create an associated newtonBody.
 
 	//default mass
@@ -49,11 +50,6 @@ GEEntityRigidBody::~GEEntityRigidBody()
 }
 
 
-GECLASSTYPE GEEntityRigidBody::ClassType()
-{
-	return GECLASSTYPE::EntityRigidBody;
-}
-
 
 
 //base tick extended
@@ -66,7 +62,7 @@ void GEEntityRigidBody::OnBaseTickUpdate(double deltaTime)
 //parenting extended
 void GEEntityRigidBody::SetParent(GEEntity* p, bool maintainGlobalTrans)
 {
-	if (p != nullptr  && p->ClassType() != GECLASSTYPE::EntityRigidBody)
+	if (p != nullptr  && p->ClassType() != GECLASS_EntityRigidBody)
 	{
 		std::cout << "Cant Parent Rigid Body To Non Rigid Body!" << std::endl;
 		return;

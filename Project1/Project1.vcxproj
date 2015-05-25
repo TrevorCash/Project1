@@ -143,6 +143,7 @@
     <ClInclude Include="GEAABB.h" />
     <ClInclude Include="GEApp.h" />
     <ClInclude Include="GEBase.h" />
+    <ClInclude Include="GECLASSTYPES.h" />
     <ClInclude Include="GEClient.h" />
     <ClInclude Include="GEConsole.h" />
     <ClInclude Include="GEContext.h" />
@@ -151,6 +152,7 @@
     <ClInclude Include="GEEntityRenderable.h" />
     <ClInclude Include="GEEntityRigidBody.h" />
     <ClInclude Include="GEMathHelpers.h" />
+    <ClInclude Include="GEMemoryManager.h" />
     <ClInclude Include="GEMeshData.h" />
     <ClInclude Include="GEModelData.h" />
     <ClInclude Include="GEModelLoader.h" />
@@ -178,6 +180,7 @@
     <ClCompile Include="GEEntityRenderable.cpp" />
     <ClCompile Include="GEEntityRigidBody.cpp" />
     <ClCompile Include="GEMathHelpers.cpp" />
+    <ClCompile Include="GEMemoryManager.cpp" />
     <ClCompile Include="GEMeshData.cpp" />
     <ClCompile Include="GEModelData.cpp" />
     <ClCompile Include="GEModelLoader.cpp" />
@@ -191,6 +194,7 @@
     <ClCompile Include="main.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="ClassDiagram.cd" />
     <None Include="fragShader.shad" />
     <None Include="vertShader.shad" />
   </ItemGroup>

@@ -1,20 +1,12 @@
 #ifndef GE_BASE
 #define GE_BASE
 
+#include "GECLASSTYPES.h"
 #include <string>
 #include <iostream>
 #include <map>
 #include <vector>
 
-enum GECLASSTYPE
-{
-	Base = 1, 
-	Entity, 
-	EntityRenderable, 
-	EntityRigidBody, 
-	MeshData,
-	ModelData
-};
 
 
 
@@ -26,11 +18,11 @@ class GEBase
 {
 
 public:
-	GEBase(void);
+	GEBase(bool autoSubscribe = true);
 	virtual ~GEBase(void);
 
 
-	virtual GECLASSTYPE ClassType();
+	virtual GECLASSTYPES ClassType();
 	virtual void EnableNetworking();
 
 	//base tick from console system.
@@ -41,46 +33,41 @@ public:
 	virtual void UnpackNetworkUpdate(std::stringstream &dataStream);
 
 
-	//subscription system
-	//////////////////////
+
 	virtual void SubscribeTo(GEBase* const obj);
 	virtual void UnSubscribeFrom(GEBase* const obj);
-	virtual void UnSubscribeFromAll();
 	virtual void DetachSubscribers();
 
 	unsigned int NumSubscriptions();
 
-
-public:
 	virtual void OnSubscriberAdd(GEBase* obj);
 	virtual void OnSubscriberRemove(GEBase* obj);
 	virtual void OnSubscriptionRemoved(GEBase* sub);
-
+	
 	bool IsSubscribedTo(std::string nickName);
-
-
+	
 	GEBase* FindSubscriberByName(const std::string &nick);
 	
-	std::map<std::string, GEBase*> subscribers;
-	std::map<std::string, GEBase*> subscriptions;
-	//////////////////////
-
 	virtual void SetNickName(std::string name);
 	virtual std::string NickName();
 
 protected:
 
+	virtual void UnSubscribeFromAll();
 
-private:
 
-	bool deleted;
+
+
+	std::map<std::string, GEBase*> subscribers;
+	std::map<std::string, GEBase*> subscriptions;
+
 	std::string nickName;//user defined nick name for easy finds from the console object.
 
 	unsigned int networkId;//id for use in networking - identical objects across network will have identical networkId's
 	bool isNetworked;
 
 
-
+	GECLASSTYPES classType;
 
 
 };

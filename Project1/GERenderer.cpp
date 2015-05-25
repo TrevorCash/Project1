@@ -18,10 +18,7 @@
 GERenderer::GERenderer(GEContext* pContext) : GEBase()
 {
 	context = pContext;
-	LoadRenderingAssets();
-	Initialize();
 
-	UnSubscribeFrom((GEBase*)GEApp::Console());
 }
 
 

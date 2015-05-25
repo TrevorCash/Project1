@@ -1,8 +1,9 @@
 #include "GEModelData.h"
 
 
-GEModelData::GEModelData(void) : GEBase()
+GEModelData::GEModelData(void) : GEBase(false)
 {
+	classType = GECLASS_ModelData;
 	graphicsBound = false;
 }
 

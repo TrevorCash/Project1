@@ -8,6 +8,8 @@
 #include "GERenderer.h"
 #include "GEClient.h"
 #include "GENetworkManager.h"
+#include "GEMemoryManager.h"
+
 #include <iostream>
 
 GEApp* GEApp::globalGameEngineInstance = nullptr;
@@ -24,6 +26,7 @@ GEApp::GEApp(void)
 	pClient = nullptr;
 
 
+	pMemoryManager = new GEMemoryManager();
 
 	pConsole = new GEConsole();
 	pConsole->SetNickName("Console");
@@ -48,18 +51,14 @@ GEApp::GEApp(void)
 
 GEApp::~GEApp(void)
 {
+	delete pConsole; // this triggers all object to be unsubscribed from the console
+					 //allowing them to be memory freed.
+					 //at this point we can also do free memory debugging..
 
-	//this order DOES matter.
-	//delete pRenderer;
-	//NewtonWorld* pNewt = pWorld->newtonWorld;
-	//delete pWorld;
-	//delete pContext;
-	//delete pClient;
-	
-	
-	delete pConsole;
+	//Free All Memory.
+	pMemoryManager->GarbageCollectAll();
 
-	//NewtonDestroy(pNewt);
+	delete pMemoryManager;
 }
 
 void GEApp::Initialize()
@@ -82,6 +81,8 @@ void GEApp::Initialize()
 		pNetStatus->ConnectToHost("localhost");
 	}
 
+	pRenderer->LoadRenderingAssets();
+	pRenderer->Initialize();
 	pWorld->Initialize();
 	pContext->HideMouse();
 }

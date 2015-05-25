@@ -12,9 +12,6 @@ public:
 	GEEntityRigidBody();
 	virtual ~GEEntityRigidBody();
 
-	virtual GECLASSTYPE ClassType();
-
-
 	//base tick extended
 	virtual void OnBaseTickUpdate(double deltaTime);
 

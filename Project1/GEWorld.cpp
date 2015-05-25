@@ -120,13 +120,9 @@ void GEWorld::BaseTickUpdate(double deltaTime)
 
 	if (KeyHit(GLFW_KEY_DELETE))
 	{
-		GEApp::GameEngine()->Console()->FindSubscriberByName("bob")->UnSubscribeFromAll();
+		GEApp::GameEngine()->Console()->FindSubscriberByName("bob")->UnSubscribeFrom(this);
 	}
-	if (KeyHit(GLFW_KEY_P))
-	{
-		delete (GEEntity*)GEApp::GameEngine()->Console()->FindSubscriberByName("bob");
-	}
-
+	
 	for (std::map<std::string, GEBase*>::iterator it = subscribers.begin(); it != subscribers.end(); it++)
 	{
 		GEBase* obj = it->second;

@@ -13,11 +13,9 @@ class GEEntity :
 	public GEBase
 {
 public:
-	GEEntity(void);
+	GEEntity(bool autoSubscribe = true);
 	virtual ~GEEntity(void);
 
-
-	virtual GECLASSTYPE ClassType();
 
 	//base tick extended
 	virtual void OnBaseTickUpdate(double deltaTime);

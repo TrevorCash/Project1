@@ -1,8 +1,10 @@
 #include "GEMeshData.h"
 
 
-GEMeshData::GEMeshData() : GEBase()
+GEMeshData::GEMeshData() : GEBase(false)
 {
+	classType = GECLASS_MeshData;
+
 	vertices = nullptr;
 	numVertices = 0;
 

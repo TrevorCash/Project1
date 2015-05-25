@@ -6,7 +6,7 @@ class GEShaderProgram :
 	public GEBase
 {
 public:
-	GEShaderProgram(void);
+	GEShaderProgram(bool autoSubscribe = true);
 	~GEShaderProgram(void);
 
 	void AttachShader(GEShader* shader);

@@ -21,13 +21,16 @@ public:
 	virtual ~GERenderer(void);
 	
 	void Render(GEClient* client, GEWorld* world, float interpolation);
-	
-	std::vector<GEModelData*>& ModelData();
-
-private:
 	void LoadRenderingAssets();
 	void FreeRenderingAssets();
 	void Initialize();
+	
+	
+	
+	std::vector<GEModelData*>& ModelData();
+	
+private:
+
 
 	GEContext* context;
 

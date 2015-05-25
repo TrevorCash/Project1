@@ -1,10 +1,16 @@
 #include "GEShaderProgram.h"
 #include "LowLevelGraphics.h"
+#include "GEApp.h"
 #include <iostream>
 
-GEShaderProgram::GEShaderProgram(void) : GEBase()
+GEShaderProgram::GEShaderProgram(bool autoSubscribe) : GEBase(autoSubscribe)
 {
 	programID = glCreateProgram();
+
+	if (autoSubscribe)
+	{
+		SubscribeTo((GEBase*)GEApp::Renderer());
+	}
 }
 
 

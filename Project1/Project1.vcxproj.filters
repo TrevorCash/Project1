@@ -120,6 +120,12 @@
     <ClInclude Include="GEAABB.h">
       <Filter>Header Files\Geometry</Filter>
     </ClInclude>
+    <ClInclude Include="GECLASSTYPES.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="GEMemoryManager.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="GEBase.cpp">
@@ -191,10 +197,14 @@
     <ClCompile Include="GEAABB.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="GEMemoryManager.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="vertShader.shad" />
     <None Include="fragShader.shad" />
+    <None Include="ClassDiagram.cd" />
   </ItemGroup>
   <ItemGroup>
     <Text Include="RoadMap.txt">

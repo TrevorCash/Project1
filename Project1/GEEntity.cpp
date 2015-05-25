@@ -9,9 +9,9 @@
 #include "EasyInput.h"
 
 
-GEEntity::GEEntity(void) : GEBase()
+GEEntity::GEEntity(bool autoSubscribe) : GEBase(autoSubscribe)
 {
-
+	classType = GECLASS_Entity;
 	pos = glm::vec3(0, 0, 0);
 	lastPos = pos;
 
@@ -25,7 +25,10 @@ GEEntity::GEEntity(void) : GEBase()
 
 	parent = nullptr;
 
-	SubscribeTo((GEBase*)GEApp::GameEngine()->GetWorld());
+	if (autoSubscribe)
+	{
+		SubscribeTo(GEApp::World());
+	}
 }
 
 GEEntity::~GEEntity(void)
@@ -40,11 +43,6 @@ GEEntity::~GEEntity(void)
 		child->SetParent(nullptr);
 		
 	}
-}
-
-GECLASSTYPE GEEntity::ClassType()
-{
-	return GECLASSTYPE::Entity;
 }
 
 

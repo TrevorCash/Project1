@@ -8,15 +8,10 @@ class GEEntityRenderable :
 {
 public:
 
-
-	GEEntityRenderable();
+	GEEntityRenderable(bool autoSubscribe = true);
 	virtual ~GEEntityRenderable();
 
 
-
-	virtual GECLASSTYPE ClassType();
-
-	
 
 	virtual void OnRenderUpdate();
 	virtual void OnBaseTickUpdate(double deltaTime);

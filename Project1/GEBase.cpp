@@ -2,41 +2,42 @@
 #include "GEApp.h"
 #include "GEConsole.h"
 #include "GENetworkManager.h"
+#include "GEMemoryManager.h"
 #include <iostream>
 #include <sstream>
 #include <string>
 
+
 //public:
-GEBase::GEBase(void)
+GEBase::GEBase(bool autoSubscribe)
 {
-	deleted = false;
+	classType = GECLASS_Base;
+
+
 	isNetworked = false;
 	
 	//nicknames default to address values..
 	UINT64 val = UINT64(this);
 	nickName = std::to_string(val);
 
-	//All Base Class Objects Subscribe to the console!!
-	if (GEApp::GameEngine()->GetConsole() != nullptr)
+	if (autoSubscribe)
 	{
-
-		GEConsole* console = GEApp::GameEngine()->GetConsole();
-
-		console->subscribers.insert(std::pair<std::string, GEBase*>(this->nickName, this));
-		this->subscriptions.insert(std::pair<std::string, GEBase*>(console->nickName, console));
-		console->OnSubscriberAdd(this);
+		SubscribeTo(GEApp::Console());
 	}
+
 }
 
 
 GEBase::~GEBase(void)
 {
+	//when the an object is deleted we detach all subscribers!
+	DetachSubscribers();
 }
 
 
-GECLASSTYPE GEBase::ClassType()
+GECLASSTYPES GEBase::ClassType()
 {
-	return GECLASSTYPE::Base;
+	return classType;
 }
 
 
@@ -76,7 +77,7 @@ void GEBase::SubscribeTo(GEBase* const obj)
 	if (IsSubscribedTo(obj->nickName))
 		return;
 	
-	obj->subscribers.insert(std::pair<std::string,GEBase*>(this->nickName, this));
+	obj->subscribers.insert(std::pair<std::string, GEBase*>(this->nickName, this));
 	this->subscriptions.insert(std::pair<std::string, GEBase*>(obj->nickName, obj));
 	obj->OnSubscriberAdd(this);
 }
@@ -88,8 +89,17 @@ void GEBase::UnSubscribeFrom(GEBase* const obj)
 	obj->subscribers.erase(this->nickName);
 	obj->OnSubscriberRemove(this);
 	subscriptions.erase(obj->nickName);
+
+	////////////////////////////////////////
+	//if we have unsubscribed from our last subscription,
+	//notify the memory manager that we need garbage collected!
+
+	if(NumSubscriptions() <= 0)
+	{
+		GEApp::MemoryManager()->AddObjectToCan(this);
+	}
 }
-//Unsubscribes from all except the console
+//Unsubscribes from all DOES NOT Trigger garbage collection!
 void GEBase::UnSubscribeFromAll()
 {
 	std::map<std::string, GEBase*>::iterator it = subscriptions.begin();
@@ -97,13 +107,8 @@ void GEBase::UnSubscribeFromAll()
 	{
 		GEBase* sub = it->second;
 		
-		if (sub != (GEBase*)GEApp::GameEngine()->GetConsole())
-		{
-			subscriptions.erase(it++);
-			sub->subscribers.erase(this->nickName);
-		}
-		else
-			it++;
+		subscriptions.erase(it++);
+		sub->subscribers.erase(this->nickName);
 	}
 
 }
@@ -111,7 +116,8 @@ void GEBase::UnSubscribeFromAll()
 void GEBase::DetachSubscribers()
 {
 	///TODO SOMETHINGS WRONG HERE ??>>>>>>
-	for (auto it = subscribers.begin(); it != subscribers.end(); it++)
+	auto oldSubscribers = subscribers;
+	for (auto it = oldSubscribers.begin(); it != oldSubscribers.end(); it++)
 	{
 		it->second->UnSubscribeFrom(this);
 	}
@@ -165,25 +171,16 @@ GEBase* GEBase::FindSubscriberByName(const std::string &nick)
 //requires to be re-subscribed to all.
 void GEBase::SetNickName(std::string name)
 {
-
+	//save old subscriptions
 	std::map<std::string, GEBase*> oldSubscriptions = subscriptions;
 	
-	//unsubscribe from everything but the console
+	//unsubscribe
 	UnSubscribeFromAll();
 
-	//as well as the console
-	GEConsole* console = GEApp::GameEngine()->GetConsole();
-
-	console->subscribers.erase(name);
-	console->OnSubscriberRemove(this);
-
+	//change nickname
 	nickName = name;
 
-	//Resubscribe to console
-	console->subscribers.insert(std::pair<std::string, GEBase*>(this->nickName, this));
-	console->OnSubscriberAdd(this);
-
-	//and everyone else
+	///resubscribe.
 	for (auto pair : oldSubscriptions)
 		SubscribeTo(pair.second);
 

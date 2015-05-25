@@ -13,20 +13,5 @@ public:
 	GEConsole();
 	virtual ~GEConsole();
 
-
-	//subscription system
-	virtual void SubscribeTo(GEBase* const obj);
-	virtual void UnSubscribeFrom(GEBase* const obj);
-
-	virtual void OnSubscriberAdd(GEBase* obj);
-	virtual void OnSubscriberRemove(GEBase* obj);
-
-	virtual void OnBaseTickUpdate(double deltaTime);
-
-	
-
-private:
-	void GarbageCollectAll();
-
 };
 

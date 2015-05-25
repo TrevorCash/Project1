@@ -3,11 +3,16 @@
 #include "GERenderer.h"
 #include <iostream>
 
-GEEntityRenderable::GEEntityRenderable() : GEEntity()
+GEEntityRenderable::GEEntityRenderable(bool autoSubscribe) : GEEntity(autoSubscribe)
 {
+	classType = GECLASS_EntityRenderable;
+
 	color = glm::vec4(1, 1, 1, 1);
 
-	SubscribeTo((GEBase*)GEApp::GameEngine()->GetRenderer());
+	if (autoSubscribe)
+	{
+		SubscribeTo(GEApp::Renderer());
+	}
 }
 
 
@@ -17,12 +22,6 @@ GEEntityRenderable::~GEEntityRenderable()
 }
 
 
-
-
-GECLASSTYPE GEEntityRenderable::ClassType()
-{
-	return GECLASSTYPE::EntityRenderable;
-}
 
 void GEEntityRenderable::OnRenderUpdate()
 {

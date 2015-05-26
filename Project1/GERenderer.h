@@ -22,10 +22,9 @@ public:
 	
 	void Render(GEClient* client, GEWorld* world, float interpolation);
 	void LoadRenderingAssets();
-	void FreeRenderingAssets();
 	void Initialize();
 	
-	
+	void AddRenderableEntity(GEEntityRenderable* ent);
 	
 	std::vector<GEModelData*>& ModelData();
 	
@@ -36,12 +35,14 @@ private:
 
 	std::vector<GEShaderProgram*> shaderProgramList;
 	std::vector<GEShader*> shaderList;
-
-
-	GEModelLoader modelLoader;
+	GEModelLoader* modelLoader;
 	std::vector<GEModelData*> modelDataList;
 	
+	std::vector<GEEntityRenderable*> renderableList;
+
+
 	void DrawRenderable(GEEntityRenderable* entity);
+
 };
 
 #endif

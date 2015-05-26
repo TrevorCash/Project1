@@ -30,8 +30,6 @@ GEBase::GEBase(bool autoSubscribe)
 
 GEBase::~GEBase(void)
 {
-	//when the an object is deleted we detach all subscribers!
-	DetachSubscribers();
 }
 
 
@@ -92,10 +90,12 @@ void GEBase::UnSubscribeFrom(GEBase* const obj)
 
 	////////////////////////////////////////
 	//if we have unsubscribed from our last subscription,
+	//that mean we can delete this object when possible
 	//notify the memory manager that we need garbage collected!
 
 	if(NumSubscriptions() <= 0)
 	{
+		DetachSubscribers();
 		GEApp::MemoryManager()->AddObjectToCan(this);
 	}
 }
@@ -115,7 +115,6 @@ void GEBase::UnSubscribeFromAll()
 //all objects currently subscribed to this are un-subscribed
 void GEBase::DetachSubscribers()
 {
-	///TODO SOMETHINGS WRONG HERE ??>>>>>>
 	auto oldSubscribers = subscribers;
 	for (auto it = oldSubscribers.begin(); it != oldSubscribers.end(); it++)
 	{

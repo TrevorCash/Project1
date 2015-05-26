@@ -18,13 +18,11 @@
 GERenderer::GERenderer(GEContext* pContext) : GEBase()
 {
 	context = pContext;
-
 }
 
 
 GERenderer::~GERenderer(void)
 {
-	FreeRenderingAssets();
 }
 
 
@@ -57,10 +55,10 @@ void GERenderer::Render(GEClient* client, GEWorld* world, float interpolation)
 	//glUniformMatrix4fv(NormalToCamera_Loc, 1, GL_FALSE, glm::value_ptr(NormalMatrix));
 
 
-	for (std::map<std::string, GEBase*>::iterator it = subscribers.begin(); it != subscribers.end(); it++)
+	for (auto it = renderableList.begin(); it != renderableList.end(); it++)
 	{		
 
-		GEEntityRenderable* ent = (GEEntityRenderable*)it->second;
+		GEEntityRenderable* ent = *it;
 
 		glm::mat4 localToWorld = ent->GetInterpolatedTransform(interpolation, true, timeOfRender);
 
@@ -88,6 +86,11 @@ void GERenderer::Render(GEClient* client, GEWorld* world, float interpolation)
 
 void GERenderer::LoadRenderingAssets()
 {
+
+	//Instantiate model loader
+	modelLoader = new GEModelLoader();
+	modelLoader->SubscribeTo(this);
+
 	//load shaders
     GEShader* pVertShad = new GEShader(GL_VERTEX_SHADER, "vertShader.shad");
 	GEShader* pFragShad = new GEShader(GL_FRAGMENT_SHADER, "fragShader.shad");
@@ -103,41 +106,27 @@ void GERenderer::LoadRenderingAssets()
 
 	//load meshes
 	GEModelData* pTestData = new GEModelData();
-	modelLoader.LoadIntoModel(pTestData, "monkey.3ds");
+	modelLoader->LoadIntoModel(pTestData, "monkey.3ds");
 	pTestData->BindGraphics();
 	modelDataList.push_back(pTestData);
 
 	GEModelData* pBoxData = new GEModelData();
-	modelLoader.LoadIntoModel(pBoxData, "box.3ds");
+	modelLoader->LoadIntoModel(pBoxData, "box.3ds");
 	pBoxData->BindGraphics();
 	modelDataList.push_back(pBoxData);
 
 	GEModelData* pLegendData = new GEModelData();
-	modelLoader.LoadIntoModel(pLegendData, "legend.3ds");
+	modelLoader->LoadIntoModel(pLegendData, "legend.3ds");
 	pLegendData->BindGraphics();
 	modelDataList.push_back(pLegendData);
 
 	GEModelData* pGearData = new GEModelData();
-	modelLoader.LoadIntoModel(pGearData, "gear1.3ds");
+	modelLoader->LoadIntoModel(pGearData, "gear1.3ds");
 	pGearData->BindGraphics();
 	modelDataList.push_back(pGearData);
 }
 
-void GERenderer::FreeRenderingAssets()
-{
-	for (int i = 0; i < (int)shaderProgramList.size(); i++)
-	{
-		shaderProgramList[i]->UnSubscribeFrom(this);
-	}
-	shaderProgramList.clear();
 
-
-	for (int i = 0; i < (int)shaderList.size(); i++)
-	{
-		shaderList[i]->UnSubscribeFrom(this);
-	}
-	shaderList.clear();
-}
 
 void GERenderer::Initialize()
 {
@@ -149,6 +138,11 @@ void GERenderer::Initialize()
     glViewport(0, 0, width, height);
 }
 
+
+void GERenderer::AddRenderableEntity(GEEntityRenderable* ent)
+{
+	renderableList.push_back(ent);
+}
 
 
 void GERenderer::DrawRenderable(GEEntityRenderable* entity)

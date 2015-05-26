@@ -12,6 +12,7 @@ GEEntityRenderable::GEEntityRenderable(bool autoSubscribe) : GEEntity(autoSubscr
 	if (autoSubscribe)
 	{
 		SubscribeTo(GEApp::Renderer());
+		GEApp::Renderer()->AddRenderableEntity(this);
 	}
 }
 

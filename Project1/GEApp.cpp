@@ -51,13 +51,14 @@ GEApp::GEApp(void)
 
 GEApp::~GEApp(void)
 {
-	delete pConsole; // this triggers all object to be unsubscribed from the console
+
+	pConsole->DetachSubscribers();// this triggers all object to be unsubscribed from the console
 					 //allowing them to be memory freed.
 					 //at this point we can also do free memory debugging..
 
 	//Free All Memory.
 	pMemoryManager->GarbageCollectAll();
-
+	delete pConsole;
 	delete pMemoryManager;
 }
 

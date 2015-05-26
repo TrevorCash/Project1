@@ -5,8 +5,7 @@
 
 #include <iostream>
 
-class GEModelLoader :
-	public GEBase
+class GEModelLoader : public GEBase
 {
 public:
 	GEModelLoader();

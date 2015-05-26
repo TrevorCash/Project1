@@ -26,7 +26,7 @@ GEWorld::GEWorld(void) : GEBase()
 
 GEWorld::~GEWorld(void)
 {
-	NewtonDestroy(newtonWorld);
+	//NewtonDestroy(newtonWorld);
 }
 
 void GEWorld::Initialize()

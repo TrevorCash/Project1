@@ -1,7 +1,7 @@
 #include "GEAABB.h"
 
 
-GEAABB::GEAABB() : GEBase()
+GEAABB::GEAABB(bool autoSubscribe) : GEBase(autoSubscribe)
 {
 	minBound = glm::vec3(-0.5, -0.5, -0.5);
 	maxBound = -minBound;

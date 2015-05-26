@@ -34,7 +34,7 @@ public:
 
 
 
-	virtual void SubscribeTo(GEBase* const obj);
+	virtual bool SubscribeTo(GEBase* const obj);
 	virtual void UnSubscribeFrom(GEBase* const obj);
 	virtual void DetachSubscribers();
 
@@ -45,7 +45,7 @@ public:
 	virtual void OnSubscriptionRemoved(GEBase* sub);
 	
 	bool IsSubscribedTo(std::string nickName);
-	
+	GEBase* FindSubscriptionByName(const std::string &nick);
 	GEBase* FindSubscriberByName(const std::string &nick);
 	
 	virtual void SetNickName(std::string name);

@@ -100,6 +100,34 @@ void GEApp::PrintEngineSpecs()
 
 void GEApp::Run(void)
 {
+	std::cout << "Subscription Test:" << std::endl;
+	
+	GEBase* a = new GEBase(); a->SetNickName("a");
+	GEBase* b = new GEBase(); b->SetNickName("b");
+	GEBase* c = new GEBase(); c->SetNickName("c");
+	GEBase* d = new GEBase(); d->SetNickName("d");
+	GEBase* e = new GEBase(); e->SetNickName("e");
+
+	b->SubscribeTo(a);
+	c->SubscribeTo(b);
+	d->SubscribeTo(c);
+	e->SubscribeTo(d);
+
+
+	e->UnSubscribeFrom(GEApp::Console());
+	
+	c->UnSubscribeFrom(GEApp::Console());
+	d->UnSubscribeFrom(GEApp::Console());
+	b->UnSubscribeFrom(GEApp::Console());
+	a->UnSubscribeFrom(GEApp::Console());
+
+	pMemoryManager->GarbageCollectAll();
+
+	std::cout << "End Subscription Test" << std::endl;
+
+
+
+
 	std::cout << "Game Engine Running" << std::endl;
 
 	float interpolation;

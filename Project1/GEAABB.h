@@ -7,8 +7,8 @@ class GEAABB :
 	public GEBase
 {
 public:
-	GEAABB();
-	~GEAABB();
+	GEAABB(bool autoSubscribe = false);
+	virtual ~GEAABB();
 
 	glm::vec3 GetMinBound();
 	glm::vec3 GetMaxBound();

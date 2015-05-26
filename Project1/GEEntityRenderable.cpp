@@ -19,7 +19,6 @@ GEEntityRenderable::GEEntityRenderable(bool autoSubscribe) : GEEntity(autoSubscr
 
 GEEntityRenderable::~GEEntityRenderable()
 {
-	UnSubscribeFrom((GEBase*)GEApp::GameEngine()->GetRenderer());
 }
 
 

@@ -65,19 +65,29 @@ void GEBase::OnBaseTickUpdate(double deltaTime)
 
 
 //subscription system
-void GEBase::SubscribeTo(GEBase* const obj)
+bool GEBase::SubscribeTo(GEBase* const obj)
 {
 	//Dont allow subscribing to yourself..
 	if (obj == this)
-		return;
+		return false;
 
 	//Dont allow double subscriptions
 	if (IsSubscribedTo(obj->nickName))
-		return;
-	
+	{
+		std::cout << "Double Subscription Attempted!" << std::endl;
+		return false;
+	}
+	//Dont allow subscribing to someone whoe is subscribed to you..
+	if (obj->IsSubscribedTo(nickName))
+	{
+		std::cout << "Infinate Loop Subscription Attempted!" << std::endl;
+		return false;
+	}
 	obj->subscribers.insert(std::pair<std::string, GEBase*>(this->nickName, this));
 	this->subscriptions.insert(std::pair<std::string, GEBase*>(obj->nickName, obj));
 	obj->OnSubscriberAdd(this);
+
+	return true;
 }
 void GEBase::UnSubscribeFrom(GEBase* const obj)
 {
@@ -145,11 +155,27 @@ void GEBase::OnSubscriptionRemoved(GEBase* sub)
 
 bool GEBase::IsSubscribedTo(std::string nickName)
 {
-	if (FindSubscriberByName(nickName))
+	if (FindSubscriptionByName(nickName))
 		return true;
 	else
 		return false;
 }
+
+GEBase* GEBase::FindSubscriptionByName(const std::string &nick)
+{
+	std::map<std::string, GEBase*>::iterator it;
+	it = subscriptions.find(nick);
+
+	if (it == subscriptions.end())
+	{
+		std::cout << "GEBase: FindObjectByName - name not found" << std::endl;
+		return nullptr;
+	}
+	return it->second;
+}
+
+
+
 
 GEBase* GEBase::FindSubscriberByName(const std::string &nick)
 {

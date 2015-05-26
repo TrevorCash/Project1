@@ -25,36 +25,37 @@ bool GEModelLoader::LoadIntoModel(GEModelData* model, std::string filename)
 
 	for (unsigned int m = 0; m < scene->mNumMeshes; m++)
 	{
-		model->meshDataList.push_back(GEMeshData());
-		GEMeshData& mesh = model->meshDataList.back();
+		GEMeshData* mesh = new GEMeshData();
+		mesh->SubscribeTo(model);
+		model->meshDataList.push_back(mesh);
 
 		const aiMesh* pAiMesh = scene->mMeshes[m];
 		
 		//fill vertices;
-		mesh.vertices = new float[4 * pAiMesh->mNumVertices];
-		mesh.numVertices = pAiMesh->mNumVertices;
+		mesh->vertices = new float[4 * pAiMesh->mNumVertices];
+		mesh->numVertices = pAiMesh->mNumVertices;
 		for (unsigned int v = 0; v < pAiMesh->mNumVertices; v++)
 		{
-			mesh.vertices[v * 4 + 0] = pAiMesh->mVertices[v].x;
-			mesh.vertices[v * 4 + 1] = pAiMesh->mVertices[v].y;
-			mesh.vertices[v * 4 + 2] = pAiMesh->mVertices[v].z;
-			mesh.vertices[v * 4 + 3] = 1.0f;//w
+			mesh->vertices[v * 4 + 0] = pAiMesh->mVertices[v].x;
+			mesh->vertices[v * 4 + 1] = pAiMesh->mVertices[v].y;
+			mesh->vertices[v * 4 + 2] = pAiMesh->mVertices[v].z;
+			mesh->vertices[v * 4 + 3] = 1.0f;//w
 		}
 
 		//fill normals;
-		mesh.normals = new float[3 * pAiMesh->mNumVertices];
-		mesh.numNormals = pAiMesh->mNumVertices;
+		mesh->normals = new float[3 * pAiMesh->mNumVertices];
+		mesh->numNormals = pAiMesh->mNumVertices;
 		for (unsigned int n = 0; n < pAiMesh->mNumVertices; n++)
 		{
-			mesh.normals[n * 3 + 0] = pAiMesh->mNormals[n].x;
-			mesh.normals[n * 3 + 1] = pAiMesh->mNormals[n].y;
-			mesh.normals[n * 3 + 2] = pAiMesh->mNormals[n].z;
+			mesh->normals[n * 3 + 0] = pAiMesh->mNormals[n].x;
+			mesh->normals[n * 3 + 1] = pAiMesh->mNormals[n].y;
+			mesh->normals[n * 3 + 2] = pAiMesh->mNormals[n].z;
 		}
 
 
 		//fill indices
-		mesh.indices = new unsigned int[pAiMesh->mNumFaces*3];
-		mesh.numIndices = pAiMesh->mNumFaces*3;
+		mesh->indices = new unsigned int[pAiMesh->mNumFaces*3];
+		mesh->numIndices = pAiMesh->mNumFaces*3;
 		for (unsigned int f = 0; f < pAiMesh->mNumFaces; f++)
 		{
 			if (pAiMesh->mFaces[f].mNumIndices < 3)
@@ -63,9 +64,9 @@ bool GEModelLoader::LoadIntoModel(GEModelData* model, std::string filename)
 				assert(EXIT_FAILURE);
 			}
 
-			mesh.indices[f * 3 + 0] = pAiMesh->mFaces[f].mIndices[0];
-			mesh.indices[f * 3 + 1] = pAiMesh->mFaces[f].mIndices[1];
-			mesh.indices[f * 3 + 2] = pAiMesh->mFaces[f].mIndices[2];
+			mesh->indices[f * 3 + 0] = pAiMesh->mFaces[f].mIndices[0];
+			mesh->indices[f * 3 + 1] = pAiMesh->mFaces[f].mIndices[1];
+			mesh->indices[f * 3 + 2] = pAiMesh->mFaces[f].mIndices[2];
 			
 		}
 

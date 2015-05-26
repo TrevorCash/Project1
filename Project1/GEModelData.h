@@ -10,8 +10,7 @@
 #include <vector>
 #include <unordered_set>
 
-class GEModelData :
-	public GEBase
+class GEModelData : public GEBase
 {
 public:
 	GEModelData(void);
@@ -21,7 +20,7 @@ public:
 	void UnBindGraphics();//releases associated bound graphcis buffers.
 
 	bool graphicsBound;
-	std::vector<GEMeshData> meshDataList;
+	std::vector<GEMeshData*> meshDataList;
 	
 };
 
